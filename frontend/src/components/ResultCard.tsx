@@ -1,6 +1,6 @@
 import { CheckCircle, XCircle } from "lucide-react";
 import type { SignatureVerificationResult } from "../types";
-import { formatAddress } from "../utils/helper";
+import { formatEVMAddress } from "../utils/helper";
 
 export const ResultCard = ({
   result,
@@ -42,7 +42,7 @@ export const ResultCard = ({
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-gray-700">Signer:</span>
           <span className="bg-gray-100 text-gray-800 text-xs font-mono px-2 py-1 rounded">
-            {formatAddress(result.signer)}
+            {formatEVMAddress(result.signer)}
           </span>
         </div>
         <div className="flex items-start justify-between">

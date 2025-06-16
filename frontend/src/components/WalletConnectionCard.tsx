@@ -1,5 +1,5 @@
 import { Wallet, CheckCircle } from "lucide-react";
-import { formatAddress } from "../utils/helper";
+import { formatEVMAddress } from "../utils/helper";
 
 export const WalletConnectionCard = ({ address }: { address: string }) => (
   <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6">
@@ -17,7 +17,7 @@ export const WalletConnectionCard = ({ address }: { address: string }) => (
         <span className="text-sm font-medium text-green-800">Connected</span>
       </div>
       <span className="bg-gray-100 text-gray-800 text-xs font-mono px-2 py-1 rounded">
-        {formatAddress(address)}
+        {formatEVMAddress(address)}
       </span>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronUp, History } from "lucide-react";
-import { formatAddress } from "../utils/helper";
+import { formatEVMAddress } from "../utils/helper";
 import type { HistoryEntry } from "../types";
 
 export const HistoryCard = ({
@@ -48,7 +48,7 @@ export const HistoryCard = ({
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="bg-gray-100 text-gray-800 text-xs font-mono px-2 py-1 rounded">
-                      {formatAddress(item.result.signer)}
+                      {formatEVMAddress(item.result.signer)}
                     </span>
                     <span
                       className={`px-2 py-1 rounded text-xs font-medium ${
