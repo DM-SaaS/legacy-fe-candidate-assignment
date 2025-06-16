@@ -48,7 +48,7 @@ export const ResultCard = ({
         <div className="flex items-start justify-between">
           <span className="text-sm font-medium text-gray-700">Message:</span>
           <span className="text-sm text-gray-600 text-right max-w-[200px] break-words">
-            {result.message}
+            {result.originalMessage}
           </span>
         </div>
       </div>

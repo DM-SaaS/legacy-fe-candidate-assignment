@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { createWalletClient, custom } from "viem";
 import { polygonMumbai } from "viem/chains";
 import axios, { AxiosError } from "axios";
@@ -42,54 +43,15 @@ export default function MessageSigner({ address }: { address: Address }) {
     localStorageItems.HISTORY_STORAGE_KEY,
     []
   );
-  const [loading, setLoading] = useState<boolean>(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleError = useCallback((err: unknown) => {
-    console.error("Signing error:", err);
-
-    if (err instanceof Error) {
-      // Check for user rejection
-      if (
-        err.message?.includes("User rejected") ||
-        err.message?.includes("rejected") ||
-        (isWalletError(err) && err.code === 4001)
-      ) {
-        setError(ERROR_MESSAGES.USER_REJECTED);
-        return;
-      }
-
-      // Check for no wallet
-      if (err.message?.includes("No wallet")) {
-        setError(ERROR_MESSAGES.NO_WALLET);
-        return;
-      }
-    }
-
-    // Check for backend errors
-    if (isBackendError(err)) {
-      setError(`Backend error: ${getBackendErrorMessage(err)}`);
-      return;
-    }
-
-    // Generic error fallback
-    setError(ERROR_MESSAGES.GENERIC_ERROR);
-  }, []);
-
-  const signAndVerify = useCallback(async (): Promise<void> => {
-    if (!message.trim()) return;
-
-    setLoading(true);
-    setError(null);
-    setResult(null);
-
-    try {
+  const { mutate: signAndVerify, isPending: loading } = useMutation({
+    mutationFn: async () => {
       if (!window.ethereum) {
         throw new Error(ERROR_MESSAGES.NO_WALLET);
       }
 
-      // Ensure address is properly typed
       if (!address || typeof address !== "string") {
         throw new Error("Invalid wallet address");
       }
@@ -100,7 +62,7 @@ export default function MessageSigner({ address }: { address: Address }) {
       });
 
       const signature = await client.signMessage({
-        account: address as Address,
+        account: address,
         message,
       });
 
@@ -108,9 +70,7 @@ export default function MessageSigner({ address }: { address: Address }) {
         `${BACKEND_URL}/verify-signature`,
         { message, signature },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
@@ -126,12 +86,34 @@ export default function MessageSigner({ address }: { address: Address }) {
       const updatedHistory: HistoryEntry[] = [newEntry, ...history];
       setHistory(updatedHistory);
       setMessage("");
-    } catch (err: unknown) {
-      handleError(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [message, address, history, setHistory, handleError]);
+    },
+    onError: (err: unknown) => {
+      console.error("Signing error:", err);
+
+      if (err instanceof Error) {
+        if (
+          err.message?.includes("User rejected") ||
+          err.message?.includes("rejected") ||
+          (isWalletError(err) && err.code === 4001)
+        ) {
+          setError(ERROR_MESSAGES.USER_REJECTED);
+          return;
+        }
+
+        if (err.message?.includes("No wallet")) {
+          setError(ERROR_MESSAGES.NO_WALLET);
+          return;
+        }
+      }
+
+      if (isBackendError(err)) {
+        setError(`Backend error: ${getBackendErrorMessage(err)}`);
+        return;
+      }
+
+      setError(ERROR_MESSAGES.GENERIC_ERROR);
+    },
+  });
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
@@ -143,7 +125,7 @@ export default function MessageSigner({ address }: { address: Address }) {
         <MessageSigningCard
           message={message}
           onMessageChange={setMessage}
-          onSign={signAndVerify}
+          onSign={() => signAndVerify()}
           loading={loading}
         />
 

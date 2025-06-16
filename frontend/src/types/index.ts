@@ -3,7 +3,7 @@ export type Address = `0x${string}`;
 export interface SignatureVerificationResult {
   isValid: boolean;
   signer: Address;
-  message: string;
+  originalMessage: string;
 }
 
 export interface HistoryEntry {
