@@ -1,10 +1,9 @@
-import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import MessageSigner from "./components/MessageSigner";
-import type { Address } from "./types";
+import { useWallet } from "./hooks/useWallet";
 
 export default function App() {
-  const { primaryWallet } = useDynamicContext();
-  const address = primaryWallet?.address as Address;
+  const { address, isConnected } = useWallet();
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 p-6">
@@ -23,7 +22,7 @@ export default function App() {
         </div>
 
         {/* Message signer */}
-        {address && <MessageSigner address={address} />}
+        {isConnected && address && <MessageSigner address={address} />}
       </div>
     </div>
   );
