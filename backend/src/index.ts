@@ -3,7 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { recoverMessageAddress } from "viem";
 
-const app = express();
+export const app = express();
 const PORT = 4000;
 
 type Address = `0x${string}`;
