@@ -6,6 +6,8 @@ import { recoverMessageAddress } from "viem";
 const app = express();
 const PORT = 4000;
 
+type Address = `0x${string}`;
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -16,7 +18,7 @@ app.get("/", (req: any, res: any) => {
 app.post("/verify-signature", async (req: any, res: any) => {
   const { message, signature } = req.body as {
     message: string;
-    signature: `0x${string}`;
+    signature: Address;
   };
 
   if (!message || !signature) {

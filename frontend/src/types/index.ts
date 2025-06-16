@@ -1,15 +1,17 @@
-export interface Props {
-  address: `0x${string}`;
-}
+export type Address = `0x${string}`;
 
 export interface SignatureVerificationResult {
   isValid: boolean;
-  signer: `0x${string}`;
-  originalMessage: string;
+  signer: Address;
+  message: string;
 }
 
 export interface HistoryEntry {
   message: string;
   signature: string;
   result: SignatureVerificationResult;
+}
+
+export interface WalletError extends Error {
+  code?: number;
 }
