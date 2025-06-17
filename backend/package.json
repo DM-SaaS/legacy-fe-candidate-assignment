@@ -7,21 +7,25 @@
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "mocha -r ts-node/register 'src/**/*.test.ts'",
-    "lint": "eslint 'src/**/*.{ts,js}'",
-    "lint:fix": "eslint 'src/**/*.{ts,js}' --fix",
+    "test:watch": "mocha -r ts-node/register --watch 'src/**/*.test.ts'",
     "build": "tsc"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "viem": "^2.31.2"
+    "helmet": "^8.1.0",
+    "joi": "^17.13.3",
+    "viem": "^2.31.2",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/chai": "^5.2.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/mocha": "^10.0.10",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.2",
     "@types/supertest": "^6.0.3",
     "chai": "^5.2.0",

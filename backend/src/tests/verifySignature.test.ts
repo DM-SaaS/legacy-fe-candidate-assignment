@@ -26,12 +26,19 @@ describe("POST /verify-signature", () => {
       .post("/verify-signature")
       .send({ message, signature: "0xInvalidSignature" });
 
-    expect(res.status).to.equal(400);
+    expect(res.status).to.equal(422);
     expect(res.body.isValid).to.be.false;
+    expect(res.body.signer).to.be.null;
+    expect(res.body.originalMessage).to.equal(message);
   });
 
   it("should return 400 for missing data", async () => {
     const res = await request(app).post("/verify-signature").send({});
-    expect(res.status).to.equal(400);
+    expect(res.status).to.equal(422);
+    expect(res.body.isValid).to.be.false;
+    expect(res.body.signer).to.be.null;
+    expect(res.body.originalMessage).to.equal(null);
+    expect(res.body.message).to.equal("Invalid input");
+    expect(res.body.details).to.exist;
   });
 });

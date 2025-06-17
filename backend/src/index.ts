@@ -1,51 +1,26 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
-import bodyParser from "body-parser";
-import { recoverMessageAddress } from "viem";
+import helmet from "helmet";
+import signatureRoutes from "./routes/signature";
+import "dotenv/config";
 
 export const app = express();
-const PORT = 4000;
-
-type Address = `0x${string}`;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(helmet()); // Adds security headers
+app.use(express.json());
 
-app.get("/", (req: any, res: any) => {
-  res.send("Hello World");
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
 });
 
-app.post("/verify-signature", async (req: any, res: any) => {
-  const { message, signature } = req.body as {
-    message: string;
-    signature: Address;
-  };
-
-  if (!message || !signature) {
-    return res
-      .status(400)
-      .json({ error: "Message and signature are required" });
-  }
-
-  try {
-    const signer = await recoverMessageAddress({
-      message,
-      signature,
-    });
-
-    return res.json({
-      isValid: true,
-      signer,
-      originalMessage: message,
-    });
-  } catch (error) {
-    return res.status(400).json({
-      isValid: false,
-      error: "Invalid signature",
-    });
-  }
-});
+app.use("/", signatureRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
