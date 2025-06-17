@@ -1,54 +1,214 @@
-# React + TypeScript + Vite
+# Web3 Message Signer - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React frontend application for signing and verifying Web3 messages with wallet integration.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Wallet Connection**: Seamless Web3 wallet integration via Dynamic.xyz
+- **Message Signing**: Interactive message signing interface
+- **History View**: Display signing history with beautiful UI
+- **Real-time Updates**: Live signature verification status
+- **Responsive Design**: Mobile-first responsive interface
+- **Modern UI**: Clean design with Tailwind CSS
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 18** - Modern React with hooks
+- **Vite** - Fast development and build tooling
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first CSS framework
+- **Viem** - Lightweight Ethereum library
+- **Dynamic.xyz** - Web3 wallet connection
+- **React Query** - Server state management
+- **React Hook Form** - Form state management
+- **Vitest** - Fast unit testing
+- **Testing Library** - Component testing utilities
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Quick Start
+
+### Prerequisites
+
+- Node.js >= 20.18.0
+- Yarn or npm
+
+### Installation
+
+```bash
+# Install dependencies
+yarn install
+
+# Copy environment variables
+cp .env.example .env
+
+# Start development server
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the frontend root:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```env
+# Backend API URL
+VITE_BACKEND_URL=http://localhost:3000
+
+# Dynamic.xyz Environment ID (get from https://app.dynamic.xyz)
+VITE_DYNAMIC_ENV_ID=your_dynamic_xyz_env_id
 ```
+
+### Getting Dynamic.xyz Environment ID
+
+1. Visit [Dynamic.xyz Dashboard](https://app.dynamic.xyz)
+2. Create a new project or select existing
+3. Copy your Environment ID from the project settings
+4. Add it to your `.env` file
+
+## Project Structure
+
+```
+frontend/
+├── public/
+├── src/
+│   ├── components/          # Reusable UI components
+│   │   └── __tests__/       # components test cases
+│   ├── hooks/              # Custom React hooks
+│   ├── utils/              # Utility functions
+│   │   ├── helpers.ts
+│   │   └── type-guards.ts
+│   ├── types/              # TypeScript type definitions
+│   │   └── __tests__/       # utilities test cases
+│   │   └── index.ts
+│   ├── App.tsx             # Main application component
+│   ├── main.tsx           # Application entry point
+│   └── vite-env.d.ts      # Vite type definitions
+├── test/                   # Test files
+│   ├── components/
+│   ├── hooks/
+│   └── utils/
+├── .env.example
+├── package.json
+├── vite.config.ts
+├── tailwind.config.js
+├── tsconfig.json
+└── README.md
+```
+
+## Testing
+
+### Run Tests
+
+```bash
+# Run all tests
+yarn test
+
+# Run specific test file
+yarn test MessageSigner.test.tsx
+```
+
+## Linting & Formatting
+
+```bash
+yarn lint             # Run ESLint
+yarn lint:fix         # Fix ESLint issues
+yarn format           # Format code with Prettier
+```
+
+## Deployment
+
+### Build for Production
+
+```bash
+yarn build
+```
+
+### Deploy to Vercel
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel --prod
+```
+
+### Deploy to Netlify
+
+```bash
+# Build the project
+yarn build
+
+# Deploy dist folder to Netlify
+# Or use Netlify CLI: netlify deploy --prod --dir=dist
+```
+
+### Environment Variables for Production
+
+Set these in your deployment platform:
+
+- `VITE_BACKEND_URL`: Your production backend URL
+- `VITE_DYNAMIC_ENV_ID`: Your Dynamic.xyz environment ID
+
+## Troubleshooting
+
+### Common Issues
+
+**Wallet Connection Failed:**
+
+```bash
+# Check if wallet extension is installed
+# Ensure wallet is unlocked
+# Try refreshing the page
+```
+
+**Environment Variables Not Loading:**
+
+```bash
+# Ensure .env file exists in frontend root
+# Restart development server after changes
+# Check variable names start with VITE_
+```
+
+**Build Errors:**
+
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules package-lock.json
+yarn install
+
+# Check linter issues
+yarn lint
+```
+
+**Dynamic.xyz Integration Issues:**
+
+```bash
+# Verify VITE_DYNAMIC_ENV_ID is correct
+# Check Dynamic.xyz dashboard for project settings
+# Ensure domain is added to allowed origins
+```
+
+## Performance Tips
+
+- **Code Splitting**: Components are lazy-loaded where appropriate
+- **Bundle Analysis**: Run `yarn build` and check bundle size
+- **Caching**: React Query handles API response caching
+
+## Security Considerations
+
+- Never expose private keys in frontend code
+- Always validate user inputs
+- Use HTTPS in production
+- Implement proper error boundaries
+- Sanitize user-generated content
+
+## Additional Resources
+
+- [React Documentation](https://react.dev/)
+- [Viem Documentation](https://viem.sh/)
+- [Dynamic.xyz Docs](https://docs.dynamic.xyz/)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [Vitest Documentation](https://vitest.dev/)
+
+---
+
+_This frontend connects to the Web3 Message Signer backend API. Make sure the backend is running for full functionality._
