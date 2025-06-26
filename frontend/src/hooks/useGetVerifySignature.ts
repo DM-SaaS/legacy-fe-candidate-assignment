@@ -10,6 +10,7 @@ interface VerifySignatureParams {
 export interface SignedMessage {
   originalMessage: string;
   signedMessage: string;
+  signer: string;
 }
 
 export const useGetVerifySignature = (params: VerifySignatureParams) => {
