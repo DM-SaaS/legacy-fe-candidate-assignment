@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "include": ["src"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*", "public/*"]
+    },
+    "esModuleInterop": true
+  }
+}
