@@ -20,3 +20,5 @@ dist/
 
 # Jest coverage
 coverage/
+
+verifySignature.test.js
