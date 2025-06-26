@@ -1,17 +1,15 @@
+import './setupEnv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import verifySignatureRoute from './routes/verifySignature';
 import helmet from 'helmet';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { PORT } from './constants';
 import {logger} from './services';
 
 
 const app = express();
 const port = PORT;
-
-dotenv.config();
 
 app.use(helmet());
 app.use(cors());
@@ -23,7 +21,7 @@ app.get('/health', (req, res) => {
 });
 
 const server = app.listen(port, () => {
-  logger.info(`Server is running on http://localhost:${port}`);
+  logger.info(`Server is running on ${port}`);
 });
 
 export { server };

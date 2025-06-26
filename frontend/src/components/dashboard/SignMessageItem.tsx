@@ -1,11 +1,12 @@
 import type React from 'react';
-import { MessageSquare, Shield } from 'lucide-react';
+import { MessageSquare, Shield, User } from 'lucide-react';
 import { Button } from '../core';
 import { showToast } from '../../util/showToast';
 
 interface SignedMessage {
   originalMessage: string;
   signedMessage: string;
+  signer: string;
 }
 
 interface SignedMessageItemProps {
@@ -35,14 +36,10 @@ export const SignedMessageItem: React.FC<SignedMessageItemProps> = ({
         <div>
           <div className="flex items-center gap-2 mb-2">
             <MessageSquare className="h-4 w-4 text-blue-600" />
-            <span className="font-semibold text-gray-800">
-              Original Message
-            </span>
+            <span className="font-semibold text-gray-800">Original Message</span>
           </div>
           <div className="bg-white rounded-lg p-3 border border-gray-100">
-            <p className="text-gray-700 break-words">
-              {message.originalMessage}
-            </p>
+            <p className="text-gray-700 break-words">{message.originalMessage}</p>
           </div>
         </div>
 
@@ -63,6 +60,16 @@ export const SignedMessageItem: React.FC<SignedMessageItemProps> = ({
             <p className="text-gray-700 font-mono text-sm break-all">
               {truncateSignature(message.signedMessage)}
             </p>
+          </div>
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <User className="h-4 w-4 text-green-600" />
+            <span className="font-semibold text-gray-800">Signer</span>
+          </div>
+          <div className="bg-white rounded-lg p-3 border border-gray-100">
+            <p className="text-gray-700 break-words">{message.signer}</p>
           </div>
         </div>
       </div>

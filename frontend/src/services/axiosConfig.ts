@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { localStorageUtils } from './localStorageService';
 import { API_BASE_URL, TOKEN_STORAGE_KEY } from '../constants';
-import { useAuth } from '../context';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -22,8 +21,8 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const { logout } = useAuth();
-      logout();
+      localStorageUtils.clear();
+      window.location.replace('/login'); 
     }
     return Promise.reject(error);
   }

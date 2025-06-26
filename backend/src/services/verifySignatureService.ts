@@ -5,7 +5,7 @@ import { logger } from './logService';
 // Store users data in a mock Database Map
 const usersSignaturesDb = new Map<
   string,
-  { originalMessage: string; signedMessage: string }[]
+  { originalMessage: string; signedMessage: string, signer: string }[]
 >();
 
 export const verifySignatureService = async (
@@ -26,7 +26,7 @@ export const verifySignatureService = async (
   const existingSignatures = usersSignaturesDb.get(email) || [];
   usersSignaturesDb.set(email, [
     ...existingSignatures,
-    { originalMessage: dto.message, signedMessage: dto.signature },
+    { originalMessage: dto.message, signedMessage: dto.signature, signer: signer },
   ]);
 
   return {

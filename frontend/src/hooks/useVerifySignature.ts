@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postRequest } from '../services/apiService';
+import { VERIFY_SIGNATURE_KEY } from '../constants';
 
 interface VerifySignatureRequest {
   signature: string;
@@ -23,7 +24,7 @@ export const useVerifySignature = () => {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['verify-signature'],
+        queryKey: [VERIFY_SIGNATURE_KEY],
       });
     },
   });
