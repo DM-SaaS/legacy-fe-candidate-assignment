@@ -27,8 +27,7 @@ export const Login = () => {
     setError('');
 
     try {
-      const result = await connectWithEmail(email);
-      console.log(result);
+      await connectWithEmail(email);
       setStep(2);
     } catch {
       setError('Failed to send OTP. Please try again.');

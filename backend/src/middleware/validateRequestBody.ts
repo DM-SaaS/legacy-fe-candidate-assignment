@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { VerifySignatureDTO } from '../dtos/verifySignatureDTO';
+import { VerifySignatureDTO } from '../dtos';
 
 export const validateRequestBody = (
   req: Request,

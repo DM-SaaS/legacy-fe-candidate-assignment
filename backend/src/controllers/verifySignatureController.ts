@@ -22,7 +22,6 @@ export const getSignaturesBasedOnUsers = async (
   req: CustomRequest,
   res: Response,
 ): Promise<void> => {
-  console.log('getSignaturesBasedOnUsers invoked');
   const email = req?.email;
 
   if (!email) {

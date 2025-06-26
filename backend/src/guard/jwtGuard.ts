@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { JwksClient } from 'jwks-rsa';
 import { CustomRequest } from '../dtos';
+import { JWKS_URL } from '../constants';
+import { logger } from '../services';
 
-const YOUR_DYNAMIC_ENV_ID = 'your-environment-id';
-const jwksUrl = `https://app.dynamic.xyz/api/v0/sdk/8ec25553-dc1b-4e26-9d77-0b2d976428fa/.well-known/jwks`;
+const jwksUrl = JWKS_URL;
 
 const client = new JwksClient({
   jwksUri: jwksUrl,
@@ -48,6 +49,7 @@ const jwtGuard = async (
 
     next();
   } catch (error) {
+    logger.error('JWT Guard Error:', error);
     res
       .status(401)
       .json({

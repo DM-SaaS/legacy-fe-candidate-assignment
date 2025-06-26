@@ -1,5 +1,6 @@
 import { VerifySignatureDTO } from '../dtos/verifySignatureDTO';
 import { hashMessage, recoverAddress } from 'ethers';
+import { logger } from './logService';
 
 // Store users data in a mock Database Map
 const usersSignaturesDb = new Map<
@@ -16,8 +17,10 @@ export const verifySignatureService = async (
   originalMessage: string;
 }> => {
 
-
+  logger.info(`Generating HASH for message: ${dto.message}`);
   const messageHash = hashMessage(dto.message);
+  
+  logger.info(`Recovering address from signature: ${dto.signature}`);
   const signer = recoverAddress(messageHash, dto.signature);
 
   const existingSignatures = usersSignaturesDb.get(email) || [];
