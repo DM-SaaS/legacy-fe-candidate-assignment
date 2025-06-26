@@ -1,13 +1,10 @@
-import { toast, ToastOptions, TypeOptions } from 'react-toastify';
-
-interface ShowToastOptions extends ToastOptions {
-  type?: TypeOptions;
-}
+import { toast } from 'react-toastify';
+import type { ToastOptions } from 'react-toastify';
 
 export function showToast(
   message: string,
   type: 'success' | 'error' = 'success',
-  options?: ShowToastOptions
+  options?: ToastOptions
 ) {
   const defaultOptions: ToastOptions = {
     position: 'top-right',

@@ -5,7 +5,7 @@ import { useAuth } from '../context';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 5000,
+  timeout: 30000,
 });
 
 axiosInstance.interceptors.request.use((config) => {

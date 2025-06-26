@@ -4,7 +4,8 @@ import { useAuth } from '../context';
 import { useConnectWithOtp } from '@dynamic-labs/sdk-react-core';
 import type { VerifyResponse } from '@dynamic-labs/sdk-api-core';
 import { ArrowLeft, Mail, Shield } from 'lucide-react';
-import { Button, Input, OtpInput, OtpInputRef } from '../components/core';
+
+import { Button, Input, OtpInput, type OtpInputRef } from '../components/core';
 
 export const Login = () => {
   const { login } = useAuth();
@@ -46,7 +47,7 @@ export const Login = () => {
 
     try {
       const result = (await verifyOneTimePassword(otpValue)) as VerifyResponse;
-      login(result.jwt, result.user.email);
+      login(result.jwt as string, result.user.email as string);
     } catch {
       setError('Invalid OTP. Please try again.');
       setOtp(['', '', '', '', '', '']);

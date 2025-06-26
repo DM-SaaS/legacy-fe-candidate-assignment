@@ -6,7 +6,7 @@ import { useDynamicWaas } from '@dynamic-labs/sdk-react-core';
 import { ChainEnum } from '@dynamic-labs/sdk-api-core';
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { useVerifySignature } from './useVerifySignature';
-import { SignedMessage, useGetVerifySignature } from './useGetVerifySignature';
+import { useGetVerifySignature, type SignedMessage } from './useGetVerifySignature';
 import { showToast } from '../util/showToast';
 
 interface UseDashboardReturn {
@@ -105,10 +105,9 @@ export const useDashboard = (): UseDashboardReturn => {
       try {
         setWalletSigning(true);
         const signature = await primaryWallet.signMessage(message);
-        console.log('SAMPLE SIGNATURE:', signature);
         setWalletSigning(false);
 
-        await verifyMutation.mutateAsync({ message, signature: signature });
+        await verifyMutation.mutateAsync({ message, signature: signature as string });
         showToast('Signature verification success', 'success');
         setMessage(''); // Clear message on success
       } catch (error) {
