@@ -43,6 +43,15 @@ Build a full-stack Web3 app that allows a user to:
 * Message signing history should persist across React component state or localStorage
 * No third-party signature validation services — use raw `ethers.js`, `viem` or similar in backend
 
+## 📝 Solution
+
+The solution is a full-stack Web3 application that enables users to:
+1. Authenticate using Dynamic.xyz for secure wallet management and two-factor authentication.
+2. Sign custom messages and verify their validity through a Node.js backend.
+3. Store signed messages efficiently in the backend for retrieval and validation.
+
+The architecture ensures modularity, scalability, and seamless integration between the frontend and backend components.
+
 ## 🖥️ Frontend
 
 ### Instructions
@@ -78,6 +87,11 @@ Build a full-stack Web3 app that allows a user to:
 - Separation of concerns between components, hooks, and services.
 - Environment variable management using `.env`.
 
+### Dynamic.xyz Usage
+- **Frontend Integration**: Utilized Dynamic.xyz for:
+  - **Two-Factor Authentication**: Implemented 2FA using email.
+  - **Wallet Management**: Managed wallet connections seamlessly.
+
 ## 🌐 Backend
 
 ### Instructions
@@ -92,9 +106,10 @@ Build a full-stack Web3 app that allows a user to:
 
 ### Structure
 - **Routes**: API endpoints like `/verify-signature`.
-- **Controllers**: Business logic for handling requests.
-- **Services**: Utility functions like `verifySignatureService`.
-- **Middleware**: Request validation and JWT guard.
+- **Controllers**: Controller level to handle request and response.
+- **Services**: Business logic and other functionalities .
+- **Middleware**: Request validations and other middle ware.
+- **Authentication**: All endpoints are authenticated using a JWT guard.
 - **Tests**: E2E tests for API endpoints.
 
 ### Technologies Used
@@ -105,15 +120,39 @@ Build a full-stack Web3 app that allows a user to:
 - **Dotenv**: Environment variable management.
 - **Helmet**: Security middleware.
 - **Cors**: Cross-origin resource sharing.
+- **JWKS-RSA**: Token validation in the JWT guard.
+
+## 🌐 URLs
+
+### Backend
+- **Health Check Endpoint**: [https://legacy-fe-candidate-assignment-4.onrender.com/health](https://legacy-fe-candidate-assignment-4.onrender.com/health)
+
+### Frontend
+- **Login Page**: [https://legacy-fe-candidate-assignment-liart.vercel.app/login](https://legacy-fe-candidate-assignment-liart.vercel.app/login)
 
 ## 🚀 Deployments
 
 ### Frontend
 - Hosted on **Vercel**.
-- Ensure `.env` is configured with the correct API URL.
 
 ### Backend
-- Hosted on **Heroku** or similar platform.
-- Ensure `.env` is configured with the correct secrets and database credentials.
+- Hosted on **Render**
 
-Let me know if you need further adjustments or additional details!
+## 🛠️ Trade-offs and Improvements
+
+
+## 🔄 Changes Made
+
+- **Backend Storage**: Stored users' signed messages in the backend using a `Map` for efficient in-memory storage.
+
+## 🛠️ Dynamic.xyz Usage
+
+- **Frontend Integration**: Utilized Dynamic.xyz for:
+  - **Two-Factor Authentication**: Implemented 2FA using email.
+  - **Wallet Management**: Managed wallet connections seamlessly.
+
+### Trade-offs
+- **Unit Tests for Frontend**: Did not write unit tests for the frontend due to time constraints.
+
+### Improvements
+- **Styling**: Could have handled styling using a theme in tailwind using tailwind config file.
