@@ -7,6 +7,7 @@ import { LoadingState } from './LoadingState';
 interface SignedMessage {
   originalMessage: string;
   signedMessage: string;
+  signer: string;
 }
 
 interface SignedMessagesListProps {
