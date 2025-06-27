@@ -42,28 +42,69 @@ A full-stack Web3 application that allows users to authenticate using Dynamic.xy
 ## 📁 Project Structure
 
 ```
-legacy-fe-candidate-assignment/
+legacy-fe-candidate-assignment-gabriel-fialho/
+├── amplify.yml                 # AWS Amplify configuration
 ├── backend/                    # NestJS backend
-│   ├── sls/                   # Serverless infrastructure
-│   │   ├── serverless.yml     # AWS deployment config
-│   │   └── package.json       # Serverless dependencies
-│   ├── src/                   # Backend source code
-│   │   ├── signature/         # Signature verification module
-│   │   ├── app.module.ts      # Main app module
-│   │   ├── main.ts            # Application entry point
-│   │   └── lambda.ts          # AWS Lambda handler
+│   ├── nest-cli.json          # Nest CLI configuration
 │   ├── package.json           # Backend dependencies
-│   └── tsconfig.json          # TypeScript config
+│   ├── package-lock.json      # Backend dependency lock
+│   ├── serverless.yml         # Serverless Framework config
+│   ├── tsconfig.json          # TypeScript configuration
+│   ├── sls/                   # Serverless infrastructure
+│   │   └── functions/
+│   │       └── api/
+│   │           └── main.yml   # Lambda function definition
+│   ├── src/                   # Backend source code
+│   │   ├── app.module.ts      # Main app module
+│   │   ├── lambda.ts          # AWS Lambda handler
+│   │   ├── main.ts            # Application entry point
+│   │   └── signature/         # Signature verification module
+│   │       ├── dto/
+│   │       │   └── verify-signature.dto.ts
+│   │       ├── signature.controller.spec.ts
+│   │       ├── signature.controller.ts
+│   │       ├── signature.module.ts
+│   │       ├── signature.service.spec.ts
+│   │       └── signature.service.ts
+│   └── test/                  # E2E tests
+│       ├── app.e2e-spec.ts
+│       └── jest-e2e.json
 ├── frontend/                  # Next.js frontend
-│   ├── src/
-│   │   ├── app/              # Next.js app directory
-│   │   ├── components/       # React components
-│   │   ├── hooks/            # Custom React hooks
-│   │   ├── lib/              # Utility functions
-│   │   └── types/            # TypeScript types
-│   ├── package.json          # Frontend dependencies
-│   └── next.config.js        # Next.js configuration
-└── README.md                 # This file
+│   ├── jest.config.js         # Jest configuration
+│   ├── jest.setup.js          # Jest setup
+│   ├── next.config.js         # Next.js configuration
+│   ├── package.json           # Frontend dependencies
+│   ├── package-lock.json      # Frontend dependency lock
+│   ├── postcss.config.js      # PostCSS configuration
+│   ├── tailwind.config.js     # Tailwind CSS configuration
+│   ├── tsconfig.json          # TypeScript configuration
+│   └── src/
+│       ├── app/               # Next.js app directory
+│       │   ├── globals.css    # Global styles
+│       │   ├── layout.tsx     # Root layout
+│       │   └── page.tsx       # Home page
+│       ├── components/        # React components
+│       │   ├── __tests__/
+│       │   │   └── Button.test.tsx
+│       │   ├── ui/            # UI components
+│       │   │   ├── Button.tsx
+│       │   │   ├── Card.tsx
+│       │   │   ├── Input.tsx
+│       │   │   └── Textarea.tsx
+│       │   ├── DynamicProvider.tsx
+│       │   ├── MessageSigner.tsx
+│       │   ├── SignatureHistory.tsx
+│       │   └── WalletConnection.tsx
+│       ├── hooks/             # Custom React hooks
+│       │   └── useSignature.tsx
+│       ├── lib/               # Utility functions
+│       │   ├── api.ts
+│       │   └── utils.ts
+│       └── types/             # TypeScript types
+│           └── index.ts
+├── ENVIRONMENT_SETUP.md       # Environment setup guide
+├── package.json               # Root package.json
+└── README.md                  # This file
 ```
 
 ## 🛠️ Setup Instructions
@@ -87,7 +128,7 @@ cd ../frontend
 npm install
 
 # Install serverless dependencies
-cd ../backend/sls
+cd ../backend
 npm install
 ```
 
@@ -134,7 +175,7 @@ cd frontend
 npm run dev
 ```
 
-The frontend will run on `http://localhost:3000`
+The frontend will run on `http://localhost:3003`
 
 ## 🧪 Testing
 
@@ -202,20 +243,6 @@ Verify a message signature.
 }
 ```
 
-### GET /api/health
-
-Health check endpoint.
-
-**Response:**
-
-```json
-{
-  "status": "ok",
-  "timestamp": "2023-12-01T10:00:00.000Z",
-  "service": "Web3 Signature Verification Backend"
-}
-```
-
 ## 🔐 Security Features
 
 - **Message Signing**: Uses EIP-191 standard message signing
@@ -223,14 +250,6 @@ Health check endpoint.
 - **Address Recovery**: Cryptographically recovers signer address
 - **Input Validation**: Comprehensive request validation
 - **CORS Protection**: Configured for secure cross-origin requests
-
-## 🎨 Design System
-
-- **Colors**: Modern purple/blue gradient theme
-- **Typography**: Inter font family for clean readability
-- **Components**: Reusable UI components with consistent styling
-- **Responsive**: Mobile-first responsive design
-- **Animations**: Subtle animations for better UX
 
 ## 📱 Features Walkthrough
 
