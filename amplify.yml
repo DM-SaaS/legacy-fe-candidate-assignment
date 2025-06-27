@@ -4,7 +4,7 @@ applications:
     env:
       variables:
         NODE_VERSION: "18"
-        NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID: "2762a57b-faa4-41ce-9f16-abff9300e2c9"
+        NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID: "9c9a47b7-aab0-4462-9cb6-457911908c79"
     backend:
       phases:
         build:
