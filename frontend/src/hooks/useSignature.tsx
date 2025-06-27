@@ -1,10 +1,26 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { SignedMessage } from '@/types';
 import { generateId } from '@/lib/utils';
 
 const STORAGE_KEY = 'signedMessages';
 
-export function useSignature() {
+interface SignatureContextType {
+    signedMessages: SignedMessage[];
+    addSignedMessage: (message: string, signature: string, signer?: string) => SignedMessage;
+    updateMessageVerification: (id: string, isVerified: boolean, signer?: string) => void;
+    removeSignedMessage: (id: string) => void;
+    clearAllMessages: () => void;
+}
+
+const SignatureContext = createContext<SignatureContextType | undefined>(undefined);
+
+interface SignatureProviderProps {
+    children: ReactNode;
+}
+
+export function SignatureProvider({ children }: SignatureProviderProps) {
     const [signedMessages, setSignedMessages] = useState<SignedMessage[]>([]);
 
     // Load messages from localStorage on component mount
@@ -66,11 +82,26 @@ export function useSignature() {
         setSignedMessages([]);
     };
 
-    return {
-        signedMessages,
-        addSignedMessage,
-        updateMessageVerification,
-        removeSignedMessage,
-        clearAllMessages,
-    };
-} 
+    return (
+        <SignatureContext.Provider
+            value={{
+                signedMessages,
+                addSignedMessage,
+                updateMessageVerification,
+                removeSignedMessage,
+                clearAllMessages,
+            }
+            }
+        >
+            {children}
+        </SignatureContext.Provider>
+    );
+}
+
+export function useSignature() {
+    const context = useContext(SignatureContext);
+    if (context === undefined) {
+        throw new Error('useSignature must be used within a SignatureProvider');
+    }
+    return context;
+}
