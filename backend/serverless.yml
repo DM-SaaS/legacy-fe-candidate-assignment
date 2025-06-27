@@ -13,6 +13,7 @@ provider:
     cors:
       allowedOrigins:
         - "http://localhost:3000"
+        - "http://localhost:3003"
         - "https://*.vercel.app"
       allowedHeaders:
         - Content-Type
@@ -30,7 +31,7 @@ plugins:
 
 custom:
   serverless-offline:
-    httpPort: 4000
+    httpPort: 3001
     host: 0.0.0.0
 
 functions:
@@ -43,5 +44,6 @@ package:
     - .git/**
     - .vscode/**
     - "*.md"
+    - "src/**"
   include:
-    - ../dist/** 
+    - "dist/**"
