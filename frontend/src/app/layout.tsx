@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import DynamicProvider from '@/components/DynamicProvider';
@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     description: 'A beautiful Web3 app for signing and verifying messages with Dynamic.xyz wallet integration',
     keywords: ['Web3', 'Ethereum', 'Signature', 'Dynamic.xyz', 'DeFi'],
     authors: [{ name: 'Web3 Developer' }],
+};
+
+export const viewport: Viewport = {
     colorScheme: 'light dark',
     themeColor: [
         { media: '(prefers-color-scheme: light)', color: 'white' },
