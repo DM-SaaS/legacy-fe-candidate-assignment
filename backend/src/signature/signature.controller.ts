@@ -15,14 +15,4 @@ export class SignatureController {
         return this.signatureService.verifySignature(verifySignatureDto);
     }
 
-    @Get('health')
-    @HttpCode(HttpStatus.OK)
-    async healthCheck() {
-        this.logger.log('GET /api/health called');
-        return {
-            status: 'ok',
-            timestamp: new Date().toISOString(),
-            service: 'Web3 Signature Verification Backend',
-        };
-    }
 } 

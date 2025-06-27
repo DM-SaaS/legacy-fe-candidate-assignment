@@ -17,7 +17,7 @@ async function createExpressApp(): Promise<express.Application> {
 
     // Enable CORS for frontend integration
     app.enableCors({
-        origin: ['http://localhost:3000', "http://localhost:3003", /^https:\/\/.*\.vercel\.app$/],
+        origin: ['http://localhost:3000', "http://localhost:3003", "https://main.d3ckkrk4814k3p.amplifyapp.com"],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,

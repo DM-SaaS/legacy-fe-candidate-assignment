@@ -14,7 +14,7 @@ provider:
       allowedOrigins:
         - "http://localhost:3000"
         - "http://localhost:3003"
-        - "https://*.vercel.app"
+        - "https://main.d3ckkrk4814k3p.amplifyapp.com"
       allowedHeaders:
         - Content-Type
         - Authorization

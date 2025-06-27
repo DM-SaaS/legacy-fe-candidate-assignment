@@ -48,14 +48,4 @@ describe('SignatureController', () => {
             expect(result.error).toBe('Invalid signature or message');
         });
     });
-
-    describe('healthCheck', () => {
-        it('should return health status', async () => {
-            const result = await controller.healthCheck();
-
-            expect(result.status).toBe('ok');
-            expect(result.service).toBe('Web3 Signature Verification Backend');
-            expect(result.timestamp).toBeDefined();
-        });
-    });
 }); 
