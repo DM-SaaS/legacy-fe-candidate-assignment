@@ -12,18 +12,23 @@ provider:
   httpApi:
     cors:
       allowedOrigins:
-        - "http://localhost:3000"
-        - "http://localhost:3003"
-        - "https://main.d3ckkrk4814k3p.amplifyapp.com"
+        - "*"
       allowedHeaders:
         - Content-Type
         - Authorization
+        - X-Requested-With
+        - Accept
+        - Origin
+        - Access-Control-Request-Method
+        - Access-Control-Request-Headers
       allowedMethods:
         - GET
         - POST
         - PUT
         - DELETE
         - OPTIONS
+        - HEAD
+        - PATCH
 
 plugins:
   - serverless-plugin-typescript

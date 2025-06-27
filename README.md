@@ -1,4 +1,4 @@
-# Web3 Signature Verifier
+# Web3 Signature Verifier - by Gabriel Fialho
 
 A full-stack Web3 application that allows users to authenticate using Dynamic.xyz embedded wallet, sign custom messages, and verify signatures through a secure backend.
 
@@ -26,6 +26,18 @@ A full-stack Web3 application that allows users to authenticate using Dynamic.xy
 │ • Tailwind CSS  │    │ • TypeScript    │    │                 │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
+
+## 📸 Application Screenshots
+
+![Screenshot 1](https://imgur.com/KNLSEM2.png)
+
+![Screenshot 2](https://imgur.com/Pk12bCG.png)
+
+![Screenshot 3](https://imgur.com/EXEDsTi.png)
+
+![Screenshot 4](https://imgur.com/045J0Dd.png)
+
+![Screenshot 5](https://imgur.com/8DUJuXw.png)
 
 ## 📁 Project Structure
 
@@ -165,7 +177,6 @@ npm run deploy
 NEXT_PUBLIC_API_URL=https://your-api-gateway-url.amazonaws.com
 ```
 
-
 ## 🔧 API Documentation
 
 ### POST /api/verify-signature
@@ -246,35 +257,6 @@ Health check endpoint.
 2. **Local Storage**: Frontend history stored locally (as required)
 3. **Single Signature Type**: Currently supports message signing only
 
-### Future Improvements
-
-1. **Database Integration**: Add PostgreSQL/MongoDB for persistent storage
-2. **Advanced Auth**: Implement role-based access control
-3. **Message Types**: Support for structured data signing (EIP-712)
-4. **Analytics**: Usage analytics and signature statistics
-5. **Multi-Chain**: Support for multiple blockchain networks
-6. **Batch Operations**: Sign multiple messages at once
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 📞 Support
-
-For questions or support:
-
-- Create an issue in this repository
-- Check the Dynamic.xyz documentation
-- Review the NestJS and Next.js documentation
-
 ---
 
-Built with ❤️ using Next.js, NestJS, TypeScript, and Dynamic.xyz
+Built with ❤️ by Gabriel Fialho

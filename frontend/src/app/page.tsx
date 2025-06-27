@@ -72,7 +72,7 @@ export default function HomePage() {
             <footer className="max-w-6xl mx-auto mt-16 pt-8 border-t text-center">
                 <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
-                        Built with Next.js, TypeScript, Dynamic.xyz, and NestJS
+                        Built by Gabriel Fialho
                     </p>
                     <div className="flex justify-center space-x-6 text-xs text-muted-foreground">
                         <span>🔐 Secure Message Signing</span>
