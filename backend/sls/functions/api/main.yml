@@ -1,0 +1,11 @@
+main:
+  handler: src/lambda.handler
+  events:
+    - httpApi:
+        path: /{proxy+}
+        method: ANY
+    - httpApi:
+        path: /
+        method: ANY
+  memorySize: 256
+  timeout: 30

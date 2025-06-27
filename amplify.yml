@@ -1,0 +1,27 @@
+version: 1
+applications:
+  - appRoot: frontend
+    env:
+      variables:
+        NODE_VERSION: "18"
+        NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID: "fc8f3b01-7b40-4d21-8fb6-ebdef2f6336b"
+    backend:
+      phases:
+        build:
+          commands: []
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+          - .next/cache/**/*

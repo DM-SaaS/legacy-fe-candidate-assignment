@@ -1,0 +1,54 @@
+service: web3-signature-backend
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  environment:
+    NODE_ENV: ${self:provider.stage}
+  httpApi:
+    cors:
+      allowedOrigins:
+        - "*"
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+        - X-Requested-With
+        - Accept
+        - Origin
+        - Access-Control-Request-Method
+        - Access-Control-Request-Headers
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+        - HEAD
+        - PATCH
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3001
+    host: 0.0.0.0
+
+functions:
+  # API
+  - ${file(sls/functions/api/main.yml)}
+
+package:
+  exclude:
+    - node_modules/**
+    - .git/**
+    - .vscode/**
+    - "*.md"
+    - "src/**"
+  include:
+    - "dist/**"
