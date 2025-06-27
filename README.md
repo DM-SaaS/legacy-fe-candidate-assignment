@@ -165,20 +165,6 @@ npm run deploy
 NEXT_PUBLIC_API_URL=https://your-api-gateway-url.amazonaws.com
 ```
 
-### Frontend Deployment (Vercel)
-
-1. Install Vercel CLI:
-
-```bash
-npm i -g vercel
-```
-
-2. Deploy:
-
-```bash
-cd frontend
-vercel --prod
-```
 
 ## 🔧 API Documentation
 
