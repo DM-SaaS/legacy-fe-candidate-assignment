@@ -4,7 +4,9 @@
     "dev": "nodemon",
     "lint": "eslint . --ext .ts && prettier --check .",
     "format": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "ts-node src/server.ts",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
