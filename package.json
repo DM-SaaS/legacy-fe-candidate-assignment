@@ -1,0 +1,9 @@
+{
+  "name": "web3-message-signer",
+  "version": "1.0.0",
+  "description": "Web3 Message Signer & Verifier",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Development setup coming soon'"
+  }
+}
