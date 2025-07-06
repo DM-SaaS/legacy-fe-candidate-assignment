@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+coverage/
+.next/
+.nuxt/
+.cache/
+*.min.js
+*.bundle.js
+pnpm-lock.yaml
+.husky/
