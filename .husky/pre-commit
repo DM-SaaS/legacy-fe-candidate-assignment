@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "🎨 Running code formatting..."
-pnpm lint-staged
-echo "✅ Pre-commit formatting complete!"
+npm run format

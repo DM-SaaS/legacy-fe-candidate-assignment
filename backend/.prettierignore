@@ -1,0 +1,7 @@
+dist/
+build/
+node_modules/
+.git/
+*.min.js
+coverage/
+*.tsbuildinfo
