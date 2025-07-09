@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useForm } from "react-hook-form";
@@ -22,8 +22,11 @@ export function AuthView() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { setShowAuthFlow, primaryWallet, user } = useDynamicContext();
+  const { setShowAuthFlow, primaryWallet, user, showAuthFlow } =
+    useDynamicContext();
   const { setUserData } = useAuthStore();
+  const emailRef = useRef<string>("");
+  const modalObserverRef = useRef<MutationObserver | null>(null);
 
   const {
     register,
@@ -45,13 +48,114 @@ export function AuthView() {
     }
   }, [primaryWallet, user, setUserData, navigate, location.state]);
 
-  const onSubmit = async () => {
+  // Function to pre-fill email in Dynamic.xyz modal
+  const preFillDynamicEmail = (email: string) => {
+    // Try multiple times since the modal might take time to render
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    const fillEmail = () => {
+      // Look for Dynamic.xyz email input field
+      const emailInput = document.querySelector(
+        'input[id="email_field"]'
+      ) as HTMLInputElement;
+
+      if (emailInput && email) {
+        // Set the value
+        emailInput.value = email;
+
+        // Trigger various events to ensure the framework picks up the change
+        emailInput.dispatchEvent(new Event("input", { bubbles: true }));
+        emailInput.dispatchEvent(new Event("change", { bubbles: true }));
+        emailInput.dispatchEvent(new Event("blur", { bubbles: true }));
+
+        // Make the field readonly to prevent user changes
+        emailInput.readOnly = true;
+        emailInput.style.backgroundColor = "#f9f9f9";
+        emailInput.style.cursor = "not-allowed";
+
+        console.log("✅ Email pre-filled in Dynamic.xyz modal:", email);
+        return true;
+      }
+
+      attempts++;
+      if (attempts < maxAttempts) {
+        setTimeout(fillEmail, 500); // Try again in 500ms
+      } else {
+        console.warn(
+          "❌ Could not find Dynamic.xyz email field after multiple attempts"
+        );
+      }
+
+      return false;
+    };
+
+    // Start trying to fill email immediately
+    setTimeout(fillEmail, 100);
+  };
+
+  // Monitor DOM for Dynamic.xyz modal appearance
+  useEffect(() => {
+    if (showAuthFlow && emailRef.current) {
+      // Start monitoring for the modal
+      preFillDynamicEmail(emailRef.current);
+
+      // Also set up a MutationObserver to catch any new modal elements
+      modalObserverRef.current = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          if (mutation.type === "childList") {
+            mutation.addedNodes.forEach(node => {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                const element = node as Element;
+                // Check if this is a Dynamic.xyz modal container
+                if (
+                  element.querySelector('input[id="email_field"]') ||
+                  element.getAttribute("id")?.includes("dynamic") ||
+                  element.className?.includes("dynamic")
+                ) {
+                  setTimeout(() => preFillDynamicEmail(emailRef.current), 100);
+                }
+              }
+            });
+          }
+        });
+      });
+
+      // Start observing
+      modalObserverRef.current.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    }
+
+    // Cleanup observer when modal closes
+    if (!showAuthFlow && modalObserverRef.current) {
+      modalObserverRef.current.disconnect();
+      modalObserverRef.current = null;
+    }
+
+    return () => {
+      if (modalObserverRef.current) {
+        modalObserverRef.current.disconnect();
+      }
+    };
+  }, [showAuthFlow]);
+
+  const onSubmit = async (data: EmailForm) => {
     try {
-      setIsLoading(true);
+      // Store the email for pre-filling
+      emailRef.current = data.email;
+
+      // Don't set loading state - this prevents the button from getting stuck
+      // if the user closes the Dynamic.xyz modal without completing
+
+      // Open Dynamic.xyz auth flow
       setShowAuthFlow(true);
-    } catch {
-      toast.error("Authentication failed");
-      setIsLoading(false);
+
+      toast.info("Opening authentication modal...");
+    } catch (error) {
+      toast.error("Failed to open authentication modal");
+      console.error("Auth flow error:", error);
     }
   };
 
@@ -91,7 +195,7 @@ export function AuthView() {
               className="w-full"
               size="lg"
               icon={Mail}
-              isLoading={isLoading}
+              // Remove isLoading prop to prevent button from getting stuck
             >
               Continue with Email
             </Button>
