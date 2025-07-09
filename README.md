@@ -8,14 +8,30 @@
 
 A modern, full-stack Web3 application for secure wallet authentication and message signature verification built with React, TypeScript, and Express.
 
+**🌐 [Live Demo](https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app)** •
+**📚 [API Documentation](https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)** •
 [Features](#features) •
 [Quick Start](#quick-start) •
 [Architecture](#architecture) •
-[API Documentation](#api-documentation) •
 [Testing](#testing) •
 [Development](#development)
 
 </div>
+
+---
+
+## 🌐 Production Deployment
+
+### **Live Application**
+- **Frontend**: [https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app](https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app)
+- **Backend API**: [https://legacy-fe-candidate-assignment-e9pd.onrender.com](https://legacy-fe-candidate-assignment-e9pd.onrender.com)
+- **API Documentation**: [https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs](https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)
+
+### **Production Stack**
+- **Frontend**: Deployed on Vercel with automatic builds
+- **Backend**: Deployed on Render with continuous integration
+- **HTTPS**: SSL certificates and secure connections
+- **CORS**: Configured for cross-origin requests
 
 ---
 
@@ -121,16 +137,27 @@ cd ../frontend && npm install
 
 **Backend** (`backend/.env`):
 ```env
+# Development
 PORT=3001
 NODE_ENV=development
 CORS_ORIGIN=http://localhost:3000
 LOG_LEVEL=info
+
+# Production Example
+NODE_ENV=production
+CORS_ORIGIN=https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
+LOG_LEVEL=warn
 ```
 
 **Frontend** (`frontend/.env`):
 ```env
+# Development
 VITE_API_URL=http://localhost:3001
 VITE_DYNAMIC_ENV_ID=your-dynamic-labs-env-id
+
+# Production Example
+VITE_API_URL=https://legacy-fe-candidate-assignment-e9pd.onrender.com
+VITE_DYNAMIC_ENV_ID=your-production-dynamic-labs-env-id
 ```
 
 ### Development
@@ -186,7 +213,8 @@ Comprehensive wallet management:
 ## 🔌 API Documentation
 
 ### Interactive Documentation
-Access the full API documentation at: **http://localhost:3001/api-docs**
+- **Production**: [https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs](https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)
+- **Development**: http://localhost:3001/api-docs
 
 ### Core Endpoints
 
@@ -362,11 +390,24 @@ legacy-fe-candidate-assignment/
 
 ## 🚀 Deployment
 
+### **Current Production Setup**
+✅ **Frontend**: Deployed on Vercel
+✅ **Backend**: Deployed on Render
+✅ **Environment Variables**: Configured
+✅ **CORS**: Cross-origin requests enabled
+✅ **HTTPS**: SSL certificates active
+✅ **API Documentation**: Live and accessible
+
+### **Production URLs**
+- **Application**: https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
+- **API Server**: https://legacy-fe-candidate-assignment-e9pd.onrender.com
+- **API Docs**: https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs
+
 ### **Production Checklist**
-- [ ] Environment variables configured
-- [ ] Database connections established
-- [ ] API rate limiting enabled
-- [ ] HTTPS certificates installed
+- [x] Environment variables configured
+- [x] CORS configuration set up
+- [x] API rate limiting enabled
+- [x] HTTPS certificates installed
 - [ ] Error monitoring configured
 - [ ] Backup strategies implemented
 
@@ -374,34 +415,44 @@ legacy-fe-candidate-assignment/
 
 ### **Environment Variables**
 
-#### **Required for Production**
+#### **Production Configuration**
 ```env
-# Backend
+# Backend (Render)
 NODE_ENV=production
 PORT=3001
-CORS_ORIGIN=https://your-domain.com
+CORS_ORIGIN=https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
 LOG_LEVEL=warn
 
-# Frontend
-VITE_API_URL=https://api.your-domain.com
+# Frontend (Vercel)
+VITE_API_URL=https://legacy-fe-candidate-assignment-e9pd.onrender.com
 VITE_DYNAMIC_ENV_ID=your-production-env-id
 ```
 
-### **Vercel Deployment**
+### **Deployment Configuration**
 
-#### **Frontend Deployment**
-1. **Connect Repository** to Vercel
-2. **Set Root Directory** to `frontend`
-3. **Environment Variables** in Vercel Dashboard:
+#### **Frontend Deployment (Vercel)**
+1. **Repository**: Connected to GitHub
+2. **Root Directory**: `frontend`
+3. **Environment Variables**:
    ```
-   VITE_API_URL=https://your-backend-url.com
+   VITE_API_URL=https://legacy-fe-candidate-assignment-e9pd.onrender.com
    VITE_DYNAMIC_ENV_ID=your-dynamic-labs-environment-id
    ```
-4. **Deploy** - Vercel auto-detects Vite configuration
+4. **Deployment**: Automatic builds on push to main branch
 
-#### **Backend Deployment Options**
+#### **Backend Deployment (Render)**
+1. **Repository**: Connected to GitHub
+2. **Configuration**: Uses existing `render.yaml`
+3. **Environment Variables**:
+   ```
+   NODE_ENV=production
+   CORS_ORIGIN=https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
+   LOG_LEVEL=warn
+   ```
+4. **Deployment**: Automatic builds with zero-downtime deploys
+
+#### **Alternative Backend Options**
 - **Railway** - Easy Node.js deployment
-- **Render** - Free tier with existing `render.yaml`
 - **Fly.io** - Global deployment platform
 - **DigitalOcean App Platform** - Container-based deployment
 

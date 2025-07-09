@@ -2,6 +2,8 @@
 
 React + TypeScript + Vite frontend for the Dynamic Wallet application.
 
+**🌐 [Live Demo](https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app)** • **📚 [API Docs](https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)**
+
 ## 🚀 Quick Start
 
 ```bash
@@ -18,9 +20,37 @@ npm run build
 npm run preview
 ```
 
+## 🌐 Production Deployment
+
+### **Live Application**
+- **Frontend**: [https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app](https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app)
+- **Backend API**: [https://legacy-fe-candidate-assignment-e9pd.onrender.com](https://legacy-fe-candidate-assignment-e9pd.onrender.com)
+
+### **Production Stack**
+- **Platform**: Vercel (Automatic deployments)
+- **Domain**: Custom Vercel subdomain
+- **SSL**: Automatically provisioned
+- **CDN**: Global edge network
+
 ## 🌐 Deployment
 
-### Vercel Deployment
+### Vercel Deployment (Production)
+
+**Current Configuration:**
+- **Repository**: Connected to GitHub
+- **Root Directory**: `frontend`
+- **Framework**: Vite (Auto-detected)
+- **Node Version**: 18.x
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+
+**Environment Variables** (in Vercel dashboard):
+```
+VITE_API_URL=https://legacy-fe-candidate-assignment-e9pd.onrender.com
+VITE_DYNAMIC_ENV_ID=your-dynamic-labs-env-id
+```
+
+### Manual Deployment Steps
 
 1. **Fork/Clone** this repository
 2. **Connect** to Vercel:
@@ -45,8 +75,13 @@ npm run preview
 
 2. Update `.env` with your values:
    ```env
+   # Development
    VITE_API_URL=http://localhost:3001
    VITE_DYNAMIC_ENV_ID=your-actual-environment-id
+
+   # Production
+   VITE_API_URL=https://legacy-fe-candidate-assignment-e9pd.onrender.com
+   VITE_DYNAMIC_ENV_ID=your-production-environment-id
    ```
 
 ## 🛠️ Development
@@ -120,10 +155,10 @@ Code quality enforced with:
 
 ## 🌍 Environment Variables
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `VITE_API_URL` | Backend API URL | `https://api.example.com` |
-| `VITE_DYNAMIC_ENV_ID` | Dynamic Labs Environment ID | `01234567-89ab-cdef-0123-456789abcdef` |
+| Variable | Description | Development | Production |
+|----------|-------------|-------------|------------|
+| `VITE_API_URL` | Backend API URL | `http://localhost:3001` | `https://legacy-fe-candidate-assignment-e9pd.onrender.com` |
+| `VITE_DYNAMIC_ENV_ID` | Dynamic Labs Environment ID | `your-dev-env-id` | `your-production-env-id` |
 
 ## 📱 Features
 
@@ -158,6 +193,8 @@ npm install
 
 **API Connection Issues:**
 - Verify `VITE_API_URL` points to running backend
+- **Development**: http://localhost:3001
+- **Production**: https://legacy-fe-candidate-assignment-e9pd.onrender.com
 - Check CORS configuration in backend
 - Ensure backend is accessible from frontend domain
 

@@ -12,7 +12,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,js,json}\"",
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
-    "dev:docs": "echo 'Starting server with API docs at http://localhost:3001/api-docs' && npm run dev",
+    "dev:docs": "echo 'Starting server with API docs at http://localhost:3001/api-docs (Production: https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)' && npm run dev",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
