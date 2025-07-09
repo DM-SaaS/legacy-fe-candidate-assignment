@@ -1,34 +1,20 @@
+export interface SignatureVerificationRequest {
+  message: string;
+  signature: string;
+}
+
+export interface SignatureVerificationResponse {
+  isValid: boolean;
+  signer: string;
+  originalMessage: string;
+  timestamp?: number;
+}
+
 export interface SignedMessage {
   id: string;
   message: string;
   signature: string;
   signer: string;
-  timestamp: string;
-  verified?: boolean;
-  verifiedAt?: string;
-}
-
-export interface VerifySignatureRequest {
-  message: string;
-  signature: string;
-}
-
-export interface VerifySignatureResponse {
-  isValid: boolean;
-  signer: string | null;
-  originalMessage: string;
-  timestamp?: string;
-  error?: string;
-}
-
-export interface ApiError {
-  message: string;
-  status: number;
-  details?: any;
-}
-
-export interface User {
-  email: string;
-  address: string;
-  isAuthenticated: boolean;
+  timestamp: number;
+  verified: boolean;
 }

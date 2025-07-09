@@ -1,20 +1,27 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { cn } from '../../lib/utils';
+import { ButtonHTMLAttributes, forwardRef } from "react";
+import { cn } from "../../utils/cn";
+import { Spinner } from "./Spinner";
+import { LucideIcon } from "lucide-react";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md" | "lg";
   isLoading?: boolean;
+  icon?: LucideIcon;
+  iconPosition?: "left" | "right";
+  iconOnly?: boolean;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant = 'primary',
-      size = 'md',
+      variant = "primary",
+      size = "md",
       isLoading,
+      icon: Icon,
+      iconPosition = "left",
+      iconOnly = false,
       children,
       disabled,
       ...props
@@ -23,27 +30,77 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const variants = {
       primary:
-        'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600',
+        "bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/25",
       secondary:
-        'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600',
-      ghost:
-        'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300',
-      danger: 'bg-red-500 text-white hover:bg-red-600',
+        "bg-white text-gray-900 border border-gray-200 hover:bg-gray-50",
+      ghost: "bg-transparent hover:bg-gray-100",
     };
 
     const sizes = {
-      sm: 'px-3 py-1.5 text-sm',
-      md: 'px-4 py-2 text-base',
-      lg: 'px-6 py-3 text-lg',
+      sm: iconOnly ? "p-1.5" : "px-3 py-1.5 text-sm",
+      md: iconOnly ? "p-2" : "px-4 py-2",
+      lg: iconOnly ? "p-3" : "px-6 py-3 text-lg",
+    };
+
+    const iconSizes = {
+      sm: "w-4 h-4",
+      md: "w-5 h-5",
+      lg: "w-6 h-6",
+    };
+
+    const renderIcon = () => {
+      if (!Icon) return null;
+      return (
+        <Icon
+          className={cn(
+            iconSizes[size],
+            children && !iconOnly && (iconPosition === "left" ? "mr-2" : "ml-2")
+          )}
+        />
+      );
+    };
+
+    const renderContent = () => {
+      if (isLoading) {
+        return (
+          <>
+            <Spinner
+              size="sm"
+              className={cn(children && !iconOnly ? "mr-2" : "")}
+            />
+            {!iconOnly && "Loading..."}
+          </>
+        );
+      }
+
+      if (iconOnly && Icon) {
+        return renderIcon();
+      }
+
+      if (iconPosition === "right") {
+        return (
+          <>
+            {children}
+            {renderIcon()}
+          </>
+        );
+      }
+
+      return (
+        <>
+          {renderIcon()}
+          {children}
+        </>
+      );
     };
 
     return (
-      <motion.button
+      <button
         ref={ref}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
         className={cn(
-          'font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
+          "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200",
+          "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
+          "disabled:opacity-50 disabled:cursor-not-allowed",
           variants[variant],
           sizes[size],
           className
@@ -51,32 +108,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         {...props}
       >
-        {isLoading ? (
-          <span className="flex items-center justify-center">
-            <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-                fill="none"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-            Loading...
-          </span>
-        ) : (
-          children
-        )}
-      </motion.button>
+        {renderContent()}
+      </button>
     );
   }
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";

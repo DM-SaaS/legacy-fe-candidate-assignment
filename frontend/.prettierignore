@@ -1,10 +1,8 @@
-dist/
-build/
-node_modules/
-.git/
+node_modules
+dist
+build
+.vite
 *.min.js
 *.min.css
-coverage/
-.vite/
-.vitest/
-*.tsbuildinfo
+package-lock.json
+public/vite.svg

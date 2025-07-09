@@ -1,7 +1,5 @@
-dist/
-build/
-node_modules/
-.git/
+node_modules
+dist
+build
 *.min.js
-coverage/
-*.tsbuildinfo
+package-lock.json

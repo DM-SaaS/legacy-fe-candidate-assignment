@@ -1,32 +1,53 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { cn } from '../../lib/utils';
+import { ReactNode } from "react";
+import { cn } from "../../utils/cn";
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'glass';
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+  variant?: "default" | "outlined" | "elevated" | "gradient";
+  padding?: "none" | "sm" | "md" | "lg";
+  rounded?: "sm" | "md" | "lg" | "xl";
 }
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant = 'default', children, ...props }, ref) => {
-    const variants = {
-      default:
-        'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
-      glass:
-        'bg-white/10 dark:bg-gray-900/10 backdrop-blur-md border border-white/20 dark:border-gray-700/20',
-    };
+export function Card({
+  children,
+  className,
+  variant = "default",
+  padding = "md",
+  rounded = "xl",
+}: CardProps) {
+  const variants = {
+    default: "bg-white shadow-sm border border-gray-100",
+    outlined: "bg-white border-2 border-gray-200",
+    elevated: "bg-white shadow-lg border border-gray-100",
+    gradient:
+      "bg-gradient-to-br from-white to-gray-50 shadow-sm border border-gray-100",
+  };
 
-    return (
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={cn('rounded-xl shadow-lg p-6', variants[variant], className)}
-        {...props}
-      >
-        {children}
-      </motion.div>
-    );
-  }
-);
+  const paddings = {
+    none: "",
+    sm: "p-3",
+    md: "p-6",
+    lg: "p-8",
+  };
 
-Card.displayName = 'Card';
+  const roundings = {
+    sm: "rounded-lg",
+    md: "rounded-xl",
+    lg: "rounded-2xl",
+    xl: "rounded-3xl",
+  };
+
+  return (
+    <div
+      className={cn(
+        variants[variant],
+        paddings[padding],
+        roundings[rounded],
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}

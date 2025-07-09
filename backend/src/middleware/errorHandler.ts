@@ -1,36 +1,46 @@
-import { Request, Response, NextFunction } from 'express';
-import { CustomError } from '../types';
+import { Request, Response, NextFunction } from "express";
+import { logger } from "../utils/logger";
+
+export class AppError extends Error {
+  constructor(
+    message: string,
+    public statusCode: number = 500,
+    public code: string = "INTERNAL_ERROR",
+    public isOperational: boolean = true
+  ) {
+    super(message);
+    Object.setPrototypeOf(this, AppError.prototype);
+  }
+}
 
 export const errorHandler = (
-  err: Error | CustomError,
+  err: Error,
   req: Request,
   res: Response,
   next: NextFunction
-): void => {
-  // Log error for debugging
-  console.error('Error:', err);
-
-  // Default error values
-  let status = 500;
-  let message = 'Internal server error';
-  let details = undefined;
-
-  // Handle custom errors
-  if (err instanceof CustomError) {
-    status = err.status;
-    message = err.message;
-    details = err.details;
-  } else if (err instanceof Error) {
-    message = err.message;
+) => {
+  if (res.headersSent) {
+    return next(err);
   }
 
-  // Send error response
-  res.status(status).json({
-    error: {
-      message,
-      status,
-      ...(process.env.NODE_ENV === 'development' && details && { details }),
-      timestamp: new Date().toISOString(),
-    },
+  logger.error("Error handler triggered", {
+    error: err.message,
+    stack: err.stack,
+    url: req.url,
+    method: req.method,
+  });
+
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      error: err.message,
+      code: err.code,
+      statusCode: err.statusCode,
+    });
+  }
+
+  res.status(500).json({
+    error: "Internal server error",
+    code: "INTERNAL_ERROR",
+    statusCode: 500,
   });
 };
