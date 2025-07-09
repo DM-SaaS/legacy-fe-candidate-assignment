@@ -30,6 +30,7 @@ vi.mock("@dynamic-labs/sdk-react-core", () => ({
     primaryWallet: null,
     isAuthenticated: false,
     setShowAuthFlow: vi.fn(),
+    showAuthFlow: false,
   }),
   DynamicContextProvider: ({ children }: { children: React.ReactNode }) =>
     children,
@@ -37,10 +38,11 @@ vi.mock("@dynamic-labs/sdk-react-core", () => ({
 }));
 
 // Mock Zustand stores
-vi.mock("@/stores/authStore", () => ({
+vi.mock("../stores/authStore", () => ({
   useAuthStore: () => ({
     isAuthenticated: false,
     user: null,
+    setUserData: vi.fn(),
     login: vi.fn(),
     logout: vi.fn(),
   }),
