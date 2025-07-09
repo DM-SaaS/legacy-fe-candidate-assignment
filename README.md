@@ -23,7 +23,7 @@ A modern, full-stack Web3 application for secure wallet authentication and messa
 ## 🌐 Production Deployment
 
 ### **Live Application**
-- **Frontend**: [https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app](https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app)
+- **Frontend**: [https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app](https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app)
 - **Backend API**: [https://legacy-fe-candidate-assignment-e9pd.onrender.com](https://legacy-fe-candidate-assignment-e9pd.onrender.com)
 - **API Documentation**: [https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs](https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)
 
@@ -145,7 +145,7 @@ LOG_LEVEL=info
 
 # Production Example
 NODE_ENV=production
-CORS_ORIGIN=https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
+CORS_ORIGIN=https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app
 LOG_LEVEL=warn
 ```
 
@@ -399,7 +399,7 @@ legacy-fe-candidate-assignment/
 ✅ **API Documentation**: Live and accessible
 
 ### **Production URLs**
-- **Application**: https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
+- **Application**: https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app
 - **API Server**: https://legacy-fe-candidate-assignment-e9pd.onrender.com
 - **API Docs**: https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs
 
@@ -420,7 +420,7 @@ legacy-fe-candidate-assignment/
 # Backend (Render)
 NODE_ENV=production
 PORT=3001
-CORS_ORIGIN=https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
+CORS_ORIGIN=https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app
 LOG_LEVEL=warn
 
 # Frontend (Vercel)
@@ -446,7 +446,7 @@ VITE_DYNAMIC_ENV_ID=your-production-env-id
 3. **Environment Variables**:
    ```
    NODE_ENV=production
-   CORS_ORIGIN=https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app
+   CORS_ORIGIN=https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app
    LOG_LEVEL=warn
    ```
 4. **Deployment**: Automatic builds with zero-downtime deploys

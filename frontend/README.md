@@ -2,7 +2,7 @@
 
 React + TypeScript + Vite frontend for the Dynamic Wallet application.
 
-**🌐 [Live Demo](https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app)** • **📚 [API Docs](https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)**
+**🌐 [Live Demo](https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app)** • **📚 [API Docs](https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs)**
 
 ## 🚀 Quick Start
 
@@ -23,7 +23,7 @@ npm run preview
 ## 🌐 Production Deployment
 
 ### **Live Application**
-- **Frontend**: [https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app](https://legacy-fe-candidate-assignment-fswrjrxrd.vercel.app)
+- **Frontend**: [https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app](https://legacy-fe-candidate-assignment-6hk8sifm5.vercel.app)
 - **Backend API**: [https://legacy-fe-candidate-assignment-e9pd.onrender.com](https://legacy-fe-candidate-assignment-e9pd.onrender.com)
 
 ### **Production Stack**
