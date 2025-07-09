@@ -47,7 +47,7 @@
     }
   },
   "env": {
-    "VITE_API_URL": "@vite_api_url",
+    "VITE_API_URL": "vite_api_url",
     "VITE_DYNAMIC_ENV_ID": "@vite_dynamic_env_id"
   }
 }
