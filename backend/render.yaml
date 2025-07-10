@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: dynamic-wallet-backend
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        value: https://your-frontend.vercel.app
+    healthCheckPath: /health

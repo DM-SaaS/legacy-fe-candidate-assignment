@@ -1,0 +1,30 @@
+{
+  "name": "legacy-fe-candidate-assignment",
+  "version": "1.0.0",
+  "description": "A production-ready Web3 application with Dynamic.xyz embedded wallet integration for email-based authentication and message signing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "lint": "cd frontend && npm run lint && cd ../backend && npm run lint",
+    "format": "cd frontend && npm run format && cd ../backend && npm run format",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:backend:docs": "cd backend && npm run dev:docs",
+    "api-docs": "echo 'API Documentation: Production: https://legacy-fe-candidate-assignment-e9pd.onrender.com/api-docs | Development: http://localhost:3001/api-docs (when backend is running)'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furqancodes/legacy-fe-candidate-assignment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/furqancodes/legacy-fe-candidate-assignment/issues"
+  },
+  "homepage": "https://github.com/furqancodes/legacy-fe-candidate-assignment#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
