@@ -1,64 +1,97 @@
-# Take-Home Task: **Web3 Message Signer & Verifier**
-React + Dynamic.xyz Headless Implementation (Frontend) | Node.js + Express (Backend)
+## 🔧 Setup Instructions
 
-## 🎯 Objective
-Build a full-stack Web3 app that allows a user to:
-1. Authenticate using a **Dynamic.xyz embedded wallet headless implementation https://docs.dynamic.xyz/headless/headless-email**
-2. Enter and **sign a custom message** of the user's choosing
-3. Send the signed message to a **Node.js + Express** backend
-4. Backend verifies the signature and responds with validity + address
+### Prerequisites
 
-## 🔧 Requirements
+- Node.js (v16 or later)
+- npm or yarn
 
-### 🧩 Frontend (React 18+)
-* Integrate Dynamic.xyz Embedded Wallet
-* After authentication:
-   * Show connected wallet address
-   * Provide a form to input a custom message
-   * Let user sign the message
-   * Submit `{ message, signature }` to backend
-* Show result from backend:
-   * Whether the signature is valid
-   * Which wallet signed it
-* Allow signing multiple messages (show a local history)
+### Backend Setup
 
-**Note:** How you structure the React app is up to you — but the app complexity is high enough that good React patterns will shine through.
+1. Navigate to the backend directory:
+   ```
+   cd backend
+   ```
 
-### 🌐 Backend (Node.js + Express – required)
-* Create a REST API endpoint: `POST /verify-signature`
-* Accept:
-```json
-{ "message": "string", "signature": "string" }
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Create a `.env` file in the backend directory with the following content:
+   ```
+   PORT=3001
+   NODE_ENV=development
+   CORS_ORIGIN=http://localhost:5173
+   ```
+
+4. Start the development server:
+   ```
+   npm run dev
+   ```
+
+The backend API will be available at `http://localhost:3001`.
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+   ```
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Create a `.env` file in the frontend directory with the following content:
+   ```
+   VITE_API_URL=http://localhost:3001/api
+   VITE_DYNAMIC_ENVIRONMENT_ID=YOUR_DYNAMIC_ENVIRONMENT_ID
+   ```
+
+   Note: You'll need to replace `YOUR_DYNAMIC_ENVIRONMENT_ID` with your actual Dynamic.xyz environment ID.
+
+4. Start the development server:
+   ```
+   npm run dev
+   ```
+
+The frontend will be available at `http://localhost:5173`.
+
+After ruunig, UI will open you have click on connect with wallet and have to signIn with wallet. 
+
+## 🧪 Running Tests
+
+### Backend Tests
+
 ```
-* Use `ethers.js` (or `viem`) to:
-   * Recover the signer from the signature
-   * Validate the signature
-* Return:
-```json
-{ "isValid": true, "signer": "0xabc123...", "originalMessage": "..." }
+cd backend
+npm test
 ```
 
-## Behavior & Constraints
-* Session state can be in-memory (no DB required)
-* Message signing history should persist across React component state or localStorage
-* No third-party signature validation services — use raw `ethers.js`, `viem` or similar in backend
+### Frontend Tests
 
-## 🚀 Submission Guidelines
-* Submit a **PR to the GitHub repo**
-* Include:
-   * Setup instructions for both frontend and backend in a README.md file
-   * Notes on any trade-offs made or areas you'd improve
-   * A test suite with all tests passing
-* Bonus: Implement headless **multi-factor auth** to seucre the user https://docs.dynamic.xyz/headless/headless-mfa
-* Bonus: Link to deployed version (e.g., Vercel frontend, Render backend)
+```
+cd frontend
+npm test
 
-## ✅ Evaluation Focus
-| Area | Evaluated On |
-|------|-------------|
-| **React architecture** | Component design, state flow, hooks, separation of concerns |
-| **Dynamic.xyz usage** | Clean login, wallet context management, signing flow |
-| **Node.js + Express** | REST API correctness, signature validation logic, modularity |
-| **Code quality** | Readability, organization, error handling, TypeScript use |
-| **User experience** | Clear flows, responsive feedback, intuitive UI |
-| **Extensibility** | Evidence of scalable thought (e.g., room for auth, roles, message types) |
-| **Design** | Beautiful UX design skills are important to us. Make the app look and feel great |
+```
+5. Live Link:
+
+##   https://web3-ugl4.vercel.app/
+
+
+## 📝 Trade-offs and Future Improvements
+
+- **Local State**: Currently using React Context and localStorage for state management. For a production application, consider using a more robust state management solution.
+- **Error Handling**: Basic error handling is implemented. Could be expanded with more comprehensive error states and user feedback.
+- **Multi-Factor Authentication**: The Dynamic.xyz headless MFA implementation could be added for enhanced security.
+- **Session Management**: Currently using in-memory session. For production, consider implementing a more persistent solution.
+- **UI/UX Enhancements**: The current UI is functional but could benefit from animations and more interactive elements.
+
+## 🔐 Security Considerations
+
+- All signature verification happens on the server side
+- No sensitive data is stored in localStorage
+- Dynamic.xyz provides secure wallet authentication 
+
