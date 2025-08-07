@@ -1,0 +1,27 @@
+# Frontend Environment Variables Example
+# Copy this content to a file named .env.local in the frontend directory
+
+# REQUIRED: Dynamic.xyz Configuration
+# Get your environment ID from https://app.dynamic.xyz/dashboard/developer
+NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID=your_dynamic_environment_id_here
+
+# REQUIRED: Backend API Configuration  
+# URL where your Node.js backend is running
+NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
+
+# OPTIONAL: Infura API Key for enhanced RPC performance
+# Get from https://infura.io/dashboard
+# NEXT_PUBLIC_INFURA_API_KEY=your_infura_api_key_here
+
+# OPTIONAL: WalletConnect Project ID for WalletConnect support
+# Get from https://cloud.walletconnect.com/
+# NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id_here
+
+# OPTIONAL: App URL (usually not needed for local development)
+# NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Instructions:
+# 1. Copy this file content to .env.local
+# 2. Replace 'your_dynamic_environment_id_here' with your actual Dynamic.xyz Environment ID
+# 3. Uncomment and fill in optional variables as needed
+# 4. Make sure your backend is running on http://localhost:3001
