@@ -1,64 +1,192 @@
-# Take-Home Task: **Web3 Message Signer & Verifier**
-React + Dynamic.xyz Headless Implementation (Frontend) | Node.js + Express (Backend)
+# 🚀 Legacy FE Candidate Assignment — Full-Stack (React + Express + Dynamic WaaS + MFA)
 
-## 🎯 Objective
-Build a full-stack Web3 app that allows a user to:
-1. Authenticate using a **Dynamic.xyz embedded wallet headless implementation https://docs.dynamic.xyz/headless/headless-email**
-2. Enter and **sign a custom message** of the user's choosing
-3. Send the signed message to a **Node.js + Express** backend
-4. Backend verifies the signature and responds with validity + address
+This repository contains a small **full-stack** app:
 
-## 🔧 Requirements
+- **Frontend** (Vite + React + TypeScript + MUI)
+    * Email + OTP authentication via **Dynamic Labs (WaaS)**
+    * **Message signing** with an embedded wallet and server-side **signature verification**
+    * **Headless MFA** flow (add device → scan QR → verify OTP → backup codes)
+    * Local history of signed messages with persistence
+    * Unit tests (Vitest, Testing Library, MSW)
 
-### 🧩 Frontend (React 18+)
-* Integrate Dynamic.xyz Embedded Wallet
-* After authentication:
-   * Show connected wallet address
-   * Provide a form to input a custom message
-   * Let user sign the message
-   * Submit `{ message, signature }` to backend
-* Show result from backend:
-   * Whether the signature is valid
-   * Which wallet signed it
-* Allow signing multiple messages (show a local history)
+- **Backend** (Express + TypeScript)
+    * `POST /verify-signature` that uses ethers to recover the signer from a signature
 
-**Note:** How you structure the React app is up to you — but the app complexity is high enough that good React patterns will shine through.
+---
 
-### 🌐 Backend (Node.js + Express – required)
-* Create a REST API endpoint: `POST /verify-signature`
-* Accept:
-```json
-{ "message": "string", "signature": "string" }
+## ✨ Contents
+
+* Prerequisites
+* Quick Start
+* How It Works
+* API Reference
+* Testing
+* Environment Variables
+* Project Structure
+* Deployment
+
+---
+
+## 🧠 Prerequisites
+
+* Node.js 18+ (22 recommended)
+* npm 8+ (comes with Node)
+* A Dynamic Labs account + Environment ID (for WaaS)
+
+---
+
+## Quick Start
+
+### 1. Backend
+
+```bash
+cd 
+npm install
+npm run dev     # starts API on http://localhost:5000
 ```
-* Use `ethers.js` (or `viem`) to:
-   * Recover the signer from the signature
-   * Validate the signature
-* Return:
-```json
-{ "isValid": true, "signer": "0xabc123...", "originalMessage": "..." }
+
+### 2. Frontend
+
+#### Stack: Vite, React 19, TypeScript, MUI, Axios, Dynamic Labs SDK(Waas)
+
+```bash
+cd frontend
+npm install
+npm run dev     # starts Vite on http://127.0.0.1:3000
 ```
 
-## Behavior & Constraints
-* Session state can be in-memory (no DB required)
-* Message signing history should persist across React component state or localStorage
-* No third-party signature validation services — use raw `ethers.js`, `viem` or similar in backend
+Before the frontend running, you should set your dynamic environment variable in env file.
 
-## 🚀 Submission Guidelines
-* Submit a **PR to the GitHub repo**
-* Include:
-   * Setup instructions for both frontend and backend in a README.md file
-   * Notes on any trade-offs made or areas you'd improve
-   * A test suite with all tests passing
-* Bonus: Implement headless **multi-factor auth** to seucre the user https://docs.dynamic.xyz/headless/headless-mfa
-* Bonus: Link to deployed version (e.g., Vercel frontend, Render backend)
+---
 
-## ✅ Evaluation Focus
-| Area | Evaluated On |
-|------|-------------|
-| **React architecture** | Component design, state flow, hooks, separation of concerns |
-| **Dynamic.xyz usage** | Clean login, wallet context management, signing flow |
-| **Node.js + Express** | REST API correctness, signature validation logic, modularity |
-| **Code quality** | Readability, organization, error handling, TypeScript use |
-| **User experience** | Clear flows, responsive feedback, intuitive UI |
-| **Extensibility** | Evidence of scalable thought (e.g., room for auth, roles, message types) |
-| **Design** | Beautiful UX design skills are important to us. Make the app look and feel great |
+## How It Works
+
+### 1. Auth & Wallet
+
+- Users authenticate via email + OTP using Dynamic Labs.
+- An embedded wallet (WaaS) is available via Dynamic SDK.
+
+### 2. Sign & Verify
+
+- In the MessageForm, the app asks the embedded wallet to `signMessage(message)`.
+
+- It sends `{ message, signature }` to `POST /verify-signature`.
+
+- The backend uses `ethers.verifyMessage(message, signature)` to recover the signer.
+
+### 3. MFA (Headless)
+
+- Add device: `useMfa().addDevice()` returns an `otpauth://` URI + `secret`.
+
+- Scan QR: Rendered via `qrcode` to a `<canvas>`.
+
+- Verify OTP: `useMfa().authenticateDevice({ code })`, then show backup codes.
+
+- Acknowledge: `useMfa().completeAcknowledgement()` after saving codes.
+
+### 4. History
+
+- Successful verifications are stored in `localStorage` and listed in the UI.
+
+---
+
+## API Reference
+
+`POST /verify-signature`
+
+- URL: `http://localhost:5000/verify-signature`
+
+- Body (JSON):
+
+```json
+{ "message": "hello", "signature": "0x..." }
+```
+
+- Success (200):
+
+```json
+{
+  "isValid": true,
+  "signer": "0xABCDEF1234...",
+  "originalMessage": "hello"
+}
+```
+
+- Error (400):
+
+```json
+{ "isValid": false, "error": "Invalid signature" }
+```
+
+---
+
+## Testing
+### Frontend
+#### Unit (Vitest + Testing Library + MSW)
+
+```bash
+cd frontend
+npm test
+```
+
+What's covered:
+
+- Auth (send OTP, verify OTP, logout, user info)
+- MessageForm (sign, verify, error paths)
+- History (rendering)
+
+### Backend
+
+The provided package.json includes Jest + Supertest.
+
+```bash
+cd backend
+npm test
+```
+
+---
+
+## Environment Variables
+### Frontend
+
+- VITE_DYNAMIC_ENV_ID - required, your Dynamic Labs Environment ID
+
+### Backend
+
+- PORT - optional (default 5000)
+
+---
+
+## 📁 Project Structure
+
+```
+Web3 Message Signer & Verifier/
+├── backend/
+│   ├── src/
+│   ├── routes/
+│   ├── tests/
+│   ├── app.ts
+│   ├── server.ts
+│   └── package.json
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── services/
+│   │   ├── test/
+│   │   ├── App.js
+│   │   └── index.js
+└── README.md
+```
+
+### 4. Deployment
+
+- Frontend:  Deploy on Vercel
+
+*domain*: https://web3-app-message-and-verify.vercel.app
+
+- Backend: Deploy on Render
+
+*https://web3-app-message-and-verify.onrender.com*
+
