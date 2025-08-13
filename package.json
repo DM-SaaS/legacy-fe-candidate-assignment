@@ -1,0 +1,42 @@
+{
+  "name": "web3-message-signer-verifier",
+  "version": "1.0.0",
+  "description": "Full-stack Web3 message signing and verification platform",
+  "private": true,
+  "scripts": {
+    "dev": "./start.sh",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build:all": "npm run install:all && npm run build:backend && npm run build:frontend",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "start:production": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "postinstall": "npm run install:all",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install --legacy-peer-deps",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "test": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm run test",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint"
+  },
+  "keywords": [
+    "web3",
+    "ethereum",
+    "dynamic.xyz",
+    "message-signing",
+    "signature-verification",
+    "next.js",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
