@@ -1,0 +1,1 @@
+export const VERIFY_SIGNATURE_KEY = 'verify-signature';

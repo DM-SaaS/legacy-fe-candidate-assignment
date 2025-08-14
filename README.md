@@ -43,22 +43,116 @@ Build a full-stack Web3 app that allows a user to:
 * Message signing history should persist across React component state or localStorage
 * No third-party signature validation services — use raw `ethers.js`, `viem` or similar in backend
 
-## 🚀 Submission Guidelines
-* Submit a **PR to the GitHub repo**
-* Include:
-   * Setup instructions for both frontend and backend in a README.md file
-   * Notes on any trade-offs made or areas you'd improve
-   * A test suite with all tests passing
-* Bonus: Implement headless **multi-factor auth** to seucre the user https://docs.dynamic.xyz/headless/headless-mfa
-* Bonus: Link to deployed version (e.g., Vercel frontend, Render backend)
+## 📝 Solution
 
-## ✅ Evaluation Focus
-| Area | Evaluated On |
-|------|-------------|
-| **React architecture** | Component design, state flow, hooks, separation of concerns |
-| **Dynamic.xyz usage** | Clean login, wallet context management, signing flow |
-| **Node.js + Express** | REST API correctness, signature validation logic, modularity |
-| **Code quality** | Readability, organization, error handling, TypeScript use |
-| **User experience** | Clear flows, responsive feedback, intuitive UI |
-| **Extensibility** | Evidence of scalable thought (e.g., room for auth, roles, message types) |
-| **Design** | Beautiful UX design skills are important to us. Make the app look and feel great |
+The solution is a full-stack Web3 application that enables users to:
+1. Authenticate using Dynamic.xyz for secure wallet management and two-factor authentication.
+2. Sign custom messages and verify their validity through a Node.js backend.
+3. Store signed messages efficiently in the backend for retrieval and validation.
+
+The architecture ensures modularity, scalability, and seamless integration between the frontend and backend components.
+
+## 🖥️ Frontend
+
+### Instructions
+1. Use **Node.js version 23**.
+2. Run the following command to install dependencies:
+   ```bash
+   npm install --legacy-peer-deps
+   ```
+3. Build the project:
+   ```bash
+   npm run build
+   ```
+4. Start the project:
+   ```bash
+   npm start
+   ```
+
+### Structure
+- **Components**: Reusable UI components like `Button`, `SignMessageItem`, and `SignedMessageList`.
+- **Hooks**: Custom hooks for API interactions (`useVerifySignature`, `useGetVerifySignature`).
+- **Services**: Axios configuration and API service layer.
+- **Utilities**: Helper functions like `showToast` for notifications.
+- **Context**: Authentication state management using `AuthContext`.
+
+### Code Quality
+- TypeScript for type safety.
+- ESLint and Prettier for consistent code formatting.
+- Tailwind CSS for styling.
+- TanStack Query for efficient data fetching and caching.
+
+### Architecture
+- Modular and scalable design.
+- Separation of concerns between components, hooks, and services.
+- Environment variable management using `.env`.
+
+### Dynamic.xyz Usage
+- **Frontend Integration**: Utilized Dynamic.xyz for:
+  - **Two-Factor Authentication**: Implemented 2FA using email.
+  - **Wallet Management**: Managed wallet connections seamlessly.
+
+## 🌐 Backend
+
+### Instructions
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the project:
+   ```bash
+   npm run start
+   ```
+
+### Structure
+- **Routes**: API endpoints like `/verify-signature`.
+- **Controllers**: Controller level to handle request and response.
+- **Services**: Business logic and other functionalities .
+- **Middleware**: Request validations and other middle ware.
+- **Authentication**: All endpoints are authenticated using a JWT guard.
+- **Tests**: E2E tests for API endpoints.
+
+### Technologies Used
+- **Node.js**: Backend runtime.
+- **Express**: Web framework.
+- **Ethers.js**: Signature verification.
+- **Jest**: Testing framework.
+- **Dotenv**: Environment variable management.
+- **Helmet**: Security middleware.
+- **Cors**: Cross-origin resource sharing.
+- **JWKS-RSA**: Token validation in the JWT guard.
+
+## 🌐 URLs
+
+### Backend
+- **Health Check Endpoint**: [https://legacy-fe-candidate-assignment-4.onrender.com/health](https://legacy-fe-candidate-assignment-4.onrender.com/health)
+
+### Frontend
+- **Login Page**: [https://legacy-fe-candidate-assignment-liart.vercel.app/login](https://legacy-fe-candidate-assignment-liart.vercel.app/login)
+
+## 🚀 Deployments
+
+### Frontend
+- Hosted on **Vercel**.
+
+### Backend
+- Hosted on **Render**
+
+## 🛠️ Trade-offs and Improvements
+
+
+## 🔄 Changes Made
+
+- **Backend Storage**: Stored users' signed messages in the backend using a `Map` for efficient in-memory storage.
+
+## 🛠️ Dynamic.xyz Usage
+
+- **Frontend Integration**: Utilized Dynamic.xyz for:
+  - **Two-Factor Authentication**: Implemented 2FA using email.
+  - **Wallet Management**: Managed wallet connections seamlessly.
+
+### Trade-offs
+- **Unit Tests for Frontend**: Did not write unit tests for the frontend due to time constraints.
+
+### Improvements
+- **Styling**: Could have handled styling using a theme in tailwind using tailwind config file.
