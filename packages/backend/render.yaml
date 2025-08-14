@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: web3-message-signer-api
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: packages/backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CORS_ORIGIN
+        fromGroup: frontend-url
+      - key: RATE_LIMIT_WINDOW
+        value: 900000
+      - key: RATE_LIMIT_MAX
+        value: 1000
+      - key: LOG_LEVEL
+        value: combined 
