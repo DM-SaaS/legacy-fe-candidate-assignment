@@ -76,18 +76,31 @@ npm run install:all
 ### 3. Environment Configuration
 
 #### Frontend Environment
-Create `packages/frontend/.env`:
+Copy the example file and configure your environment variables:
+
+```bash
+cd packages/frontend
+cp .env.example .env.local
+```
+
+Edit `packages/frontend/.env.local` with your configuration:
 
 ```env
-VITE_DYNAMIC_ENVIRONMENT_ID=your_dynamic_environment_id
-VITE_API_BASE_URL=http://localhost:3001/api
+# Dynamic.xyz Environment Configuration
+# Get your environment ID from https://app.dynamic.xyz/
+VITE_DYNAMIC_ENVIRONMENT_ID=your_dynamic_environment_id_here
+
+# API Base URL Configuration
+# For local development, use http://localhost:3000/api
+# You can change this to your deployed backend URL for production
+VITE_API_BASE_URL=http://localhost:3000/api
 ```
 
 #### Backend Environment
 Create `packages/backend/.env`:
 
 ```env
-PORT=3001
+PORT=3000
 NODE_ENV=development
 CORS_ORIGIN=http://localhost:5173
 ```
@@ -100,7 +113,7 @@ npm run dev
 
 # Or start individually:
 npm run dev:frontend  # Frontend on http://localhost:5173
-npm run dev:backend   # Backend on http://localhost:3001
+npm run dev:backend   # Backend on http://localhost:3000
 ```
 
 ## Usage Guide
@@ -131,7 +144,7 @@ The application automatically verifies signatures by:
 ### Base URL
 ```
 # Development
-http://localhost:3001/api
+http://localhost:3000/api
 
 # Production
 https://decentralized-backend.onrender.com/api
@@ -308,14 +321,21 @@ npm run build --workspace=frontend
 ## Environment Variables
 
 ### Production Frontend
+For production deployment, update your `.env.local` file:
+
 ```env
+# Dynamic.xyz Environment Configuration
+# Use your production environment ID from Dynamic.xyz dashboard
 VITE_DYNAMIC_ENVIRONMENT_ID=your_production_dynamic_environment_id
+
+# API Base URL Configuration
+# Replace with your deployed backend URL
 VITE_API_BASE_URL=https://your-backend-url.com/api
 ```
 
 ### Production Backend
 ```env
-PORT=3001
+PORT=3000
 NODE_ENV=production
 CORS_ORIGIN=https://your-frontend-url.com
 ```

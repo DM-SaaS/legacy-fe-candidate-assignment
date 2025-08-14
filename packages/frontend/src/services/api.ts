@@ -12,7 +12,7 @@ import type {
 } from '../types';
 import { API_ENDPOINTS } from '../constants';
 
-const API_BASE_URL = 'https://decentralized-backend.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
