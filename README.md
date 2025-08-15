@@ -1,64 +1,136 @@
-# Take-Home Task: **Web3 Message Signer & Verifier**
-React + Dynamic.xyz Headless Implementation (Frontend) | Node.js + Express (Backend)
+# Dynamic.xyz Web3 Message Signer & Verifier Task
 
-## 🎯 Objective
-Build a full-stack Web3 app that allows a user to:
-1. Authenticate using a **Dynamic.xyz embedded wallet headless implementation https://docs.dynamic.xyz/headless/headless-email** ⚠️ Do not simply implement the Widget ⚠️
-2. Enter and **sign a custom message** of the user's choosing
-3. Send the signed message to a **Node.js + Express** backend
-4. Backend verifies the signature and responds with validity + address
+Live Demo Links:
 
-## 🔧 Requirements
+Frontend: https://web3-message-signer-cmu9.vercel.app/
 
-### 🧩 Frontend (React 18+)
-* Integrate Dynamic.xyz Embedded Wallet
-* After authentication:
-   * Show connected wallet address
-   * Provide a form to input a custom message
-   * Let user sign the message
-   * Submit `{ message, signature }` to backend
-* Show result from backend:
-   * Whether the signature is valid
-   * Which wallet signed it
-* Allow signing multiple messages (show a local history)
+Backend API: https://web3-message-signer-vwit.onrender.com
 
-**Note:** How you structure the React app is up to you — but the app complexity is high enough that good React patterns will shine through.
+This project is a full-stack web app built with **Next.js** (frontend) and **Node.js/Express** (backend) that lets users sign and verify blockchain messages securely using Dynamic.xyz’s headless authentication.
 
-### 🌐 Backend (Node.js + Express – required)
-* Create a REST API endpoint: `POST /verify-signature`
-* Accept:
-```json
-{ "message": "string", "signature": "string" }
-```
-* Use `ethers.js` (or `viem`) to:
-   * Recover the signer from the signature
-   * Validate the signature
-* Return:
-```json
-{ "isValid": true, "signer": "0xabc123...", "originalMessage": "..." }
-```
+- **Frontend:** `/app`, `/components`
+- **Backend:** `/backend` folder
 
-## Behavior & Constraints
-* Session state can be in-memory (no DB required)
-* Message signing history should persist across React component state or localStorage
-* No third-party signature validation services — use raw `ethers.js`, `viem` or similar in backend
+---
 
-## 🚀 Submission Guidelines
-* Submit a **PR to the GitHub repo**
-* Include:
-   * Setup instructions for both frontend and backend in a README.md file
-   * Notes on any trade-offs made or areas you'd improve
-   * A test suite with all tests passing
-* Bonus: Implement headless **multi-factor auth** to seucre the user https://docs.dynamic.xyz/headless/headless-mfa
-* Bonus: Link to deployed version (e.g., Vercel frontend, Render backend)
+## ✨ Features
 
-## ✅ Evaluation Focus
-| Area | Evaluated On |
-|------|-------------|
-| **React architecture** | Component design, state flow, hooks, separation of concerns |
-| **Dynamic.xyz usage** | Clean login, wallet context management, signing flow |
-| **Node.js + Express** | REST API correctness, signature validation logic, modularity |
-| **Code quality** | Readability, organization, error handling, TypeScript use |
-| **User experience** | Clear flows, responsive feedback, intuitive UI |
-| **Extensibility** | Evidence of scalable thought (e.g., room for auth, roles, message types) |
-| **Design** | Beautiful UX design skills are important to us. Make the app look and feel great |
+- Web3 wallet connection and custom message signing (Dynamic.xyz, headless mode)
+- Signature verification using raw ethers.js on backend (no third party)
+- Message/signature history (persists in localStorage)
+- No database; session and history are in-memory or on client
+- Modern, modular React components & custom CSS or CSS modules
+
+---
+
+## 🏁 Quick Start
+
+### 1. Clone & Install
+
+git clone <your-repo-url>
+cd dynamic.xyz # or your root project folder
+npm install # only installs frontend deps
+cd backend
+npm install
+cd ..
+
+---
+
+### 2. Set Up Environment Variables
+
+Create a `.env.local` file in your root project:
+
+.env.local (at project root, NOT in backend)
+NEXT_PUBLIC_DYNAMIC_ENV_ID=your_dynamic_environment_id
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
+
+text
+
+- Replace `your_dynamic_environment_id` with your Dynamic.xyz value.
+
+---
+
+### 3. Run Backend (Node/Express)
+
+From the project root:
+
+cd backend
+node index.js # or use nodemon for auto-reload
+
+text
+
+- Runs on `http://localhost:4000` by default.
+
+---
+
+### 4. Run Frontend (Next.js)
+
+From the project root:
+
+npm run dev
+
+or, if using yarn:
+yarn dev
+text
+
+- Frontend runs on `http://localhost:3000`
+
+---
+
+## 🧩 Project Structure
+
+app/ → Next.js app folder (app router)
+components/ → All React components: Header, SignMessage, History
+layout.tsx → App shell, context providers
+page.tsx → Main page, uses modular components
+
+backend/ → Node.js + Express backend (signature verification)
+index.js
+package.json
+
+.env.local → Secrets and config variables (see above)
+
+text
+
+---
+
+## 🤖 Development Notes
+
+- **No DB used:** All message history in browser storage; session is frontend context/in-memory.
+- **No widget**: Uses Dynamic SDK headless API only (all UI custom).
+- **Signature verify API:** `/verify-signature` (handled by ethers.js in backend, not any SaaS).
+- Change endpoints/port in `.env.local` and `backend/index.js` as needed.
+
+---
+
+## 💡 Troubleshooting
+
+- **localStorage error in SSR?**: All access is done in `useEffect` and is safe for Next.js.
+- **Multiple lockfile warning?** Delete stray `package-lock.json` from root if not needed.
+- **Signature still fails verify?** Check message whitespace and content is exactly the same in sign and verify.
+
+---
+
+## 📖 Scripts
+
+All scripts run from root unless noted.
+
+| Command                     | Description                     |
+| --------------------------- | ------------------------------- |
+| npm run dev                 | Run frontend app (Next.js)      |
+| cd backend && node index.js | Run backend server              |
+| npm install                 | Install dependencies (frontend) |
+| (cd backend && npm install) | Install backend dependencies    |
+
+## Trade-offs & Potential Improvements
+
+- No DB: For simplicity and per requirements, all history is per-browser localStorage. For multi-device history, would add DB + user auth.
+- No global state manager: Local state & context is sufficient for current scope, but scalable apps may benefit from Zustand/Jotai.
+- Testing: Used minimal/sample tests for demonstration. In production, would add more edge-case/unit/integration coverage.
+- Environment variables: All API endpoints/config through `.env.local` for security and easy migration.
+
+### Areas to Improve
+
+- Responsive/small screen optimizations
+- UX: Copy-to-clipboard toast, notifications
+- Real database or session sync if needed for "real" users
