@@ -1,64 +1,150 @@
-# Take-Home Task: **Web3 Message Signer & Verifier**
-React + Dynamic.xyz Headless Implementation (Frontend) | Node.js + Express (Backend)
+# Web3 Signer & Verifier
 
-## 🎯 Objective
-Build a full-stack Web3 app that allows a user to:
-1. Authenticate using a **Dynamic.xyz embedded wallet headless implementation https://docs.dynamic.xyz/headless/headless-email** ⚠️ Do not simply implement the Widget ⚠️
-2. Enter and **sign a custom message** of the user's choosing
-3. Send the signed message to a **Node.js + Express** backend
-4. Backend verifies the signature and responds with validity + address
+A minimal, headless-friendly DApp that:
+- Lets a user log in by email (OTP) via Dynamic.
+- Signs arbitrary messages with their wallet.
+- Verifies signatures server‑side (Node/Express + ethers).
+- Shows a per‑user local signing history in a clean Material UI.
 
-## 🔧 Requirements
+> Frontend: Vite + React + TypeScript + Material UI  
+> Backend: Node + Express + TypeScript + ethers + zod
 
-### 🧩 Frontend (React 18+)
-* Integrate Dynamic.xyz Embedded Wallet
-* After authentication:
-   * Show connected wallet address
-   * Provide a form to input a custom message
-   * Let user sign the message
-   * Submit `{ message, signature }` to backend
-* Show result from backend:
-   * Whether the signature is valid
-   * Which wallet signed it
-* Allow signing multiple messages (show a local history)
+---
 
-**Note:** How you structure the React app is up to you — but the app complexity is high enough that good React patterns will shine through.
+## Repository layout
 
-### 🌐 Backend (Node.js + Express – required)
-* Create a REST API endpoint: `POST /verify-signature`
-* Accept:
-```json
-{ "message": "string", "signature": "string" }
 ```
-* Use `ethers.js` (or `viem`) to:
-   * Recover the signer from the signature
-   * Validate the signature
-* Return:
-```json
-{ "isValid": true, "signer": "0xabc123...", "originalMessage": "..." }
+web3-signer/
+├─ frontend/          # Vite + React + TS app (Material UI theme)
+└─ backend/           # Express + TS API (signature verification)
 ```
 
-## Behavior & Constraints
-* Session state can be in-memory (no DB required)
-* Message signing history should persist across React component state or localStorage
-* No third-party signature validation services — use raw `ethers.js`, `viem` or similar in backend
+---
 
-## 🚀 Submission Guidelines
-* Submit a **PR to the GitHub repo**
-* Include:
-   * Setup instructions for both frontend and backend in a README.md file
-   * Notes on any trade-offs made or areas you'd improve
-   * A test suite with all tests passing
-* Bonus: Implement headless **multi-factor auth** to seucre the user https://docs.dynamic.xyz/headless/headless-mfa
-* Bonus: Link to deployed version (e.g., Vercel frontend, Render backend)
+## Prerequisites
 
-## ✅ Evaluation Focus
-| Area | Evaluated On |
-|------|-------------|
-| **React architecture** | Component design, state flow, hooks, separation of concerns |
-| **Dynamic.xyz usage** | Clean login, wallet context management, signing flow |
-| **Node.js + Express** | REST API correctness, signature validation logic, modularity |
-| **Code quality** | Readability, organization, error handling, TypeScript use |
-| **User experience** | Clear flows, responsive feedback, intuitive UI |
-| **Extensibility** | Evidence of scalable thought (e.g., room for auth, roles, message types) |
-| **Design** | Beautiful UX design skills are important to us. Make the app look and feel great |
+- Node.js **18+** (recommended LTS)
+- npm **9+**
+- A **Dynamic** sandbox environment (ENV_ID + API Key) if you plan to use server-side MFA verification later.
+- A modern browser (Chrome/Edge/Firefox/Safari)
+
+---
+
+## Quick start
+
+### 1) Clone the repo
+
+```bash
+git clone https://github.com/rushi189/web3-signer.git
+cd web3-signer
+```
+
+### 2) Install dependencies
+
+```bash
+# frontend
+cd frontend
+npm install
+
+# backend
+cd ../backend
+npm install
+```
+
+### 3) Configure environment
+
+> We keep real `.env` files (not just `.env.example`). Open and edit both files as needed.
+
+#### `frontend/.env`
+
+```
+VITE_DYNAMIC_ENV_ID=<your_dynamic_env_id>
+VITE_BACKEND_URL=http://localhost:8080
+```
+
+- `VITE_DYNAMIC_ENV_ID` – Dynamic environment ID (Sandbox)
+- `VITE_BACKEND_URL` – URL of the backend API
+
+#### `backend/.env`
+
+```
+PORT=8080
+CORS_ORIGIN=http://localhost:5173
+DYNAMIC_ENV_ID=<your_dynamic_env_id>
+```
+
+- `PORT` – backend port
+- `CORS_ORIGIN` – comma‑separated list of allowed web origins (add your dev URLS)
+- `DYNAMIC_ENV_ID` – used if you later enable server‑side MFA verification (optional in this version)
+
+> **Note:** We intentionally keep `.env` files (not just examples). Do **not** commit secrets if your repo is public.
+
+### 4) Run the apps
+
+**Frontend (dev server):**
+
+```bash
+cd frontend
+npm run dev
+# Vite will print http://localhost:5173
+```
+
+**Backend (build + start):**
+
+```bash
+cd backend
+npm run build
+npm run start
+# API on http://localhost:8080
+```
+
+Open the frontend in your browser, sign in with your email (OTP), then sign & verify messages.
+
+---
+
+## Scripts reference
+
+### Frontend
+
+- `npm run dev` – Start Vite dev server
+- `npm run build` – Production build
+- `npm run preview` – Preview the production build locally
+- `npm run lint` (if present) – Lint code
+
+### Backend
+
+- `npm run build` – Compile TypeScript to `dist/`
+- `npm run start` – Run compiled server (`node dist/server.js`)
+- `npm run test` (if present) – Run unit tests
+
+---
+
+## API (backend)
+
+- `POST /verify-signature`  
+  Body:
+  ```json
+  { "message": "hello web3", "signature": "0x..." }
+  ```
+  Response:
+  ```json
+  { "isValid": true, "signer": "0xabc...", "originalMessage": "hello web3" }
+  ```
+
+Validation is handled by `zod` and signer recovery by `ethers`.
+
+---
+
+## Troubleshooting
+
+- **CORS errors**: Make sure `CORS_ORIGIN` in `backend/.env` includes your frontend origin (`http://localhost:5173` by default).
+- **Dynamic login issues**: Confirm `VITE_DYNAMIC_ENV_ID` matches the Sandbox environment in the Dynamic dashboard.
+- **Port conflicts**: Change `PORT` or `VITE_BACKEND_URL` accordingly.
+
+---
+
+## Notes
+
+- Local signing history is stored per user (scoped to their email) in the browser.
+- MFA enrollment is optionally shown first if no authenticator is present (you can toggle this behaviour in the dashboard page).
+
